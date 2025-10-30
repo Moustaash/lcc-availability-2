@@ -1,0 +1,5 @@
+{
+  "name": "Chalet Availability Viewer",
+  "description": "A web application to visualize chalet availability with monthly and daily views, filters, and a responsive design.",
+  "requestFramePermissions": []
+}
