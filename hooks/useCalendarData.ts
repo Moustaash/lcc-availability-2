@@ -49,7 +49,7 @@ export function useCalendarData() {
     const fetchData = async () => {
       setSyncStatus(SyncStatus.SYNCING);
       try {
-        const response = await fetch('/data.json');
+        const response = await fetch('/data/site/availability/data.json'); // Path for production server
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
