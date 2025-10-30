@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-// FIX: The `date-fns` functions were not callable because of incorrect imports. Changed to use named imports from the main 'date-fns' package to resolve module loading errors.
-import { addMonths, subMonths, parseISO, subDays } from 'date-fns';
+// FIX: Changed date-fns imports to use named exports from the main package to resolve "not callable" errors.
+import { addMonths, parseISO, subDays, subMonths } from 'date-fns';
 import { Chalet, Booking, SyncStatus, BookingStatus } from '../lib/types';
 
 // Raw types from data.json
@@ -40,7 +40,7 @@ const statusToName = (status: BookingStatus): string => {
 
 export function useCalendarData() {
   const [syncStatus, setSyncStatus] = useState<SyncStatus>(SyncStatus.IDLE);
-  const [chalets, setChalets] = useState<Chalet[]>([]);
+  const [chalets, setChalets] = useState<Chalet[]>([]]);
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [currentDate, setCurrentDate] = useState(new Date(2025, 10, 1)); // Default to Nov 2025
 

@@ -1,66 +1,56 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import Header from './components/Header';
 import FilterControls from './components/FilterControls';
 import AvailabilityGrid from './components/AvailabilityGrid';
+import MobileCalendarView from './components/MobileCalendarView';
 import Legend from './components/Legend';
 import { useCalendarData } from './hooks/useCalendarData';
+import { useMediaQuery } from './hooks/useMediaQuery';
+import { Chalet } from './lib/types';
 
 function App() {
-  const { 
-    syncStatus, 
-    chalets, 
-    bookings, 
-    currentDate, 
-    handlePrevMonth, 
-    handleNextMonth, 
-    handleDateChange 
+  const {
+    syncStatus,
+    chalets,
+    bookings,
+    currentDate,
+    handlePrevMonth,
+    handleNextMonth,
+    handleDateChange,
   } = useCalendarData();
 
-  const [searchedDate, setSearchedDate] = useState<Date | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedChalets, setSelectedChalets] = useState<Chalet[]>([]);
+  const isMobile = useMediaQuery('(max-width: 768px)');
 
-  const filteredChalets = useMemo(() => {
-    if (!searchQuery) return chalets;
-    return chalets.filter(chalet => 
-      chalet.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  }, [chalets, searchQuery]);
+  // Initially, if no chalets are selected, display all of them.
+  const chaletsToDisplay = selectedChalets.length > 0 ? selectedChalets : chalets;
 
-  const handleDateSearch = (date: Date | null) => {
-    setSearchedDate(date);
-    if (date) {
-      handleDateChange(date);
-    }
-  };
-  
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-background-dark text-gray-800 dark:text-text-dark font-sans transition-colors">
+    <div className="bg-gray-50 dark:bg-background-dark min-h-screen font-sans text-gray-900 dark:text-text-dark">
       <Header syncStatus={syncStatus} />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <FilterControls 
+      <main className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+        <FilterControls
           currentDate={currentDate}
           onPrevMonth={handlePrevMonth}
           onNextMonth={handleNextMonth}
           onDateChange={handleDateChange}
-          searchedDate={searchedDate}
-          onDateSearch={handleDateSearch}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
+          chalets={chalets}
+          selectedChalets={selectedChalets}
+          onSelectedChaletsChange={setSelectedChalets}
         />
-        {
-          syncStatus === 'syncing' || syncStatus === 'idle' ? (
-            <div className="flex justify-center items-center h-96">
-              <p>Chargement des données...</p>
-            </div>
-          ) : (
-            <AvailabilityGrid 
-              chalets={filteredChalets}
-              bookings={bookings}
-              currentDate={currentDate}
-              searchedDate={searchedDate}
-            />
-          )
-        }
+        {isMobile ? (
+          <MobileCalendarView
+            chalets={chaletsToDisplay}
+            bookings={bookings}
+            currentDate={currentDate}
+          />
+        ) : (
+          <AvailabilityGrid
+            chalets={chaletsToDisplay}
+            bookings={bookings}
+            currentDate={currentDate}
+          />
+        )}
         <Legend />
       </main>
     </div>
