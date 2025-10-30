@@ -1,15 +1,13 @@
 import React from 'react';
 import { Chalet, Booking, BookingStatus } from '../lib/types';
-// FIX: Changed date-fns imports to use named exports from the main package to resolve "not callable" errors.
-import {
-  format,
-  endOfMonth,
-  startOfMonth,
-  eachDayOfInterval,
-  isWithinInterval,
-  parseISO,
-} from 'date-fns';
-import { fr } from 'date-fns/locale';
+// FIX: Use sub-path imports for date-fns to resolve module errors.
+import format from 'date-fns/format';
+import endOfMonth from 'date-fns/endOfMonth';
+import startOfMonth from 'date-fns/startOfMonth';
+import eachDayOfInterval from 'date-fns/eachDayOfInterval';
+import isWithinInterval from 'date-fns/isWithinInterval';
+import parseISO from 'date-fns/parseISO';
+import fr from 'date-fns/locale/fr';
 import { cn } from '../lib/utils';
 
 interface AvailabilityGridProps {

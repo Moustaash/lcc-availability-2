@@ -25,4 +25,5 @@ export interface Booking {
 export interface Chalet {
   id: string;
   name: string;
+  imageUrl?: string;
 }

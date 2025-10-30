@@ -1,7 +1,7 @@
 import React from 'react';
-// FIX: Changed date-fns imports to use named exports from the main package to resolve "not callable" errors.
-import { format } from 'date-fns';
-import { fr } from 'date-fns/locale';
+// FIX: Use sub-path imports for date-fns to resolve module errors.
+import format from 'date-fns/format';
+import fr from 'date-fns/locale/fr';
 import { Chalet } from '../lib/types';
 import ChaletSelector from './ChaletSelector';
 

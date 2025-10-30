@@ -1,0 +1,43 @@
+export const chaletImages: Record<string, string> = {
+  "cinq": "https://chalets-de-valdisere.locvacances.com/lv/images/lot/0000000023_01.jpg?20250514130640",
+  "cahokia": "https://chalets-de-valdisere.locvacances.com/lv/images/lot/0000000019_03.jpg?20220808145658",
+  "mathilda": "https://chalets-de-valdisere.locvacances.com/lv/images/lot/0000000015_01.jpg?20240826160458",
+  "savoie-53": "https://chalets-de-valdisere.locvacances.com/lv/images/imme/0000000202_01.jpg?20240415145330",
+  "bestview": "https://chalets-de-valdisere.locvacances.com/lv/images/lot/0000000013_02.jpg?20240424224857",
+  "chamois": "https://chalets-de-valdisere.locvacances.com/lv/images/lot/0000000010_07.jpg?20240424215059",
+  "papillon": "https://chalets-de-valdisere.locvacances.com/lv/images/lot/0000000004_01.jpg?20240827130541",
+  "marie": "https://chalets-de-valdisere.locvacances.com/lv/images/lot/0000000014_01.jpg?20240826160424",
+  "face": "https://chalets-de-valdisere.locvacances.com/lv/images/lot/0000000003_01.jpg?20240826160256",
+  "lievre-blanc": "https://chalets-de-valdisere.locvacances.com/lv/images/lot/0000000016_01.jpg?20240827100545",
+  "fleche": "https://chalets-de-valdisere.locvacances.com/lv/images/lot/0000000009_01.jpg?20240424220737",
+  "alice": "https://chalets-de-valdisere.locvacances.com/lv/images/lot/0000000017_03.jpg?20240827130541",
+  "anemones": "https://chalets-de-valdisere.locvacances.com/lv/images/lot/0000000021_08.jpg?20241005000533",
+  "sifflotte": "https://chalets-de-valdisere.locvacances.com/lv/images/lot/0000000001_03.jpg?20240424223339",
+  "etoile": "https://chalets-de-valdisere.locvacances.com/lv/images/lot/0000000008_01.jpg?20240424220148",
+  "ourson": "https://chalets-de-valdisere.locvacances.com/lv/images/lot/0000000002_01.jpg?20240424221903",
+  "piou": "https://chalets-de-valdisere.locvacances.com/lv/images/lot/0000000002_01.jpg?20240424221903", // Fusée uses piou's slug
+  "flocon": "https://chalets-de-valdisere.locvacances.com/lv/images/lot/0000000006_01.jpg?20240424221247",
+  "blanchot": "https://chalets-de-valdisere.locvacances.com/lv/images/lot/0000000005_01.jpg?20240424215859"
+};
+
+export const chaletInfo = [
+  { nameFR: "Alice", slug: "alice" },
+  { nameFR: "Anémones", slug: "anemones" },
+  { nameFR: "Bestview", slug: "bestview" },
+  { nameFR: "Blanchot", slug: "blanchot" },
+  { nameFR: "Cahokia", slug: "cahokia" },
+  { nameFR: "Chamois", slug: "chamois" },
+  { nameFR: "Cinq", slug: "cinq" },
+  { nameFR: "Étoile", slug: "etoile" },
+  { nameFR: "Face", slug: "face" },
+  { nameFR: "Flèche", slug: "fleche" },
+  { nameFR: "Flocon", slug: "flocon" },
+  { nameFR: "Lièvre Blanc", slug: "lievre-blanc" },
+  { nameFR: "Marie", slug: "marie" },
+  { nameFR: "Mathilda", slug: "mathilda" },
+  { nameFR: "Ourson", slug: "ourson" },
+  { nameFR: "Papillon", slug: "papillon" },
+  { nameFR: "Fusée", slug: "piou" },
+  { nameFR: "Savoie", slug: "savoie-53" },
+  { nameFR: "Sifflotte", slug: "sifflotte" },
+];

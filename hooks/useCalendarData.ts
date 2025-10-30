@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
-// FIX: Changed date-fns imports to use named exports from the main package to resolve "not callable" errors.
-import { addMonths, parseISO, subDays, subMonths } from 'date-fns';
+// FIX: Use sub-path imports for date-fns to resolve module errors.
+import addMonths from 'date-fns/addMonths';
+import parseISO from 'date-fns/parseISO';
+import subDays from 'date-fns/subDays';
+import subMonths from 'date-fns/subMonths';
 import { Chalet, Booking, SyncStatus, BookingStatus } from '../lib/types';
+import { chaletImages, chaletInfo } from '../lib/chalet-data';
 
 // Raw types from data.json
 interface RawWeek {
@@ -40,7 +44,7 @@ const statusToName = (status: BookingStatus): string => {
 
 export function useCalendarData() {
   const [syncStatus, setSyncStatus] = useState<SyncStatus>(SyncStatus.IDLE);
-  const [chalets, setChalets] = useState<Chalet[]>([]]);
+  const [chalets, setChalets] = useState<Chalet[]>([]);
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [currentDate, setCurrentDate] = useState(new Date(2025, 10, 1)); // Default to Nov 2025
 
@@ -56,10 +60,16 @@ export function useCalendarData() {
         
         const data = jsonData[0];
 
-        const allChalets: Chalet[] = data.lots.map(lot => ({
-          id: lot.id,
-          name: lot.label,
-        }));
+        const allChalets: Chalet[] = data.lots.map(lot => {
+          const slug = lot.id.toLowerCase();
+          const info = chaletInfo.find(c => c.slug === slug);
+          
+          return {
+            id: lot.id,
+            name: info ? info.nameFR : lot.label,
+            imageUrl: chaletImages[slug],
+          };
+        });
 
         const allBookings: Booking[] = data.lots.flatMap(lot => 
           lot.weeks.map((week, index) => {
