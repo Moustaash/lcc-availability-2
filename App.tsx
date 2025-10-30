@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
-// FIX: Changed date-fns imports to use subpaths to resolve module resolution errors.
-import addMonths from 'date-fns/addMonths';
-import subMonths from 'date-fns/subMonths';
+// FIX: Consolidate date-fns imports to resolve module resolution errors.
+import { addMonths, subMonths } from 'date-fns';
 import Header from './components/Header';
 import FilterControls from './components/FilterControls';
 import AvailabilityGrid from './components/AvailabilityGrid';

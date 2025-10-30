@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-// FIX: Changed date-fns imports to use subpaths to resolve module resolution errors.
-import isBefore from 'date-fns/isBefore';
-import parseISO from 'date-fns/parseISO';
+// FIX: Consolidate date-fns imports to resolve module resolution errors.
+import { isBefore, parseISO } from 'date-fns';
 import { RawData, Booking, BookingStatus, SyncStatus, Property } from '../lib/types';
 
 type BookingsMap = Map<string, Booking[]>;

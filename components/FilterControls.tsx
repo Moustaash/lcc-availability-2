@@ -1,11 +1,7 @@
 import React, { useRef } from 'react';
-// FIX: Changed date-fns imports to use subpaths to resolve module resolution errors.
-import format from 'date-fns/format';
-import getMonth from 'date-fns/getMonth';
-import getYear from 'date-fns/getYear';
-import setMonth from 'date-fns/setMonth';
-import setYear from 'date-fns/setYear';
-import fr from 'date-fns/locale/fr';
+// FIX: Consolidate date-fns imports to resolve module resolution errors.
+import { format, getMonth, getYear, setMonth, setYear } from 'date-fns';
+import { fr } from 'date-fns/locale';
 
 interface FilterControlsProps {
   currentDate: Date;
