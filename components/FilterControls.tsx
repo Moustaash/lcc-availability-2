@@ -1,10 +1,10 @@
 import React, { useRef } from 'react';
-// FIX: Changed date-fns imports to use direct paths to fix module resolution errors for functions and locale.
+// FIX: Changed date-fns imports to use subpaths to resolve module resolution errors.
 import format from 'date-fns/format';
-import getYear from 'date-fns/getYear';
 import getMonth from 'date-fns/getMonth';
-import setYear from 'date-fns/setYear';
+import getYear from 'date-fns/getYear';
 import setMonth from 'date-fns/setMonth';
+import setYear from 'date-fns/setYear';
 import fr from 'date-fns/locale/fr';
 
 interface FilterControlsProps {

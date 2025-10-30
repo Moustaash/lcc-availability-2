@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-// FIX: Changed date-fns imports to use direct paths to fix module resolution errors.
+// FIX: Changed date-fns imports to use subpaths to resolve module resolution errors.
 import addMonths from 'date-fns/addMonths';
 import subMonths from 'date-fns/subMonths';
 import Header from './components/Header';
