@@ -20,10 +20,15 @@ const ChaletSelector: React.FC<ChaletSelectorProps> = ({ chalets, selectedChalet
 
   // Sync temp state when modal opens
   useEffect(() => {
-    if (isOpen) {
+    // This effect should only run when the modal is opened to initialize
+    // the temporary state. It should not re-run on subsequent re-renders
+    // while the modal remains open. Removing `selectedChalets` from the
+    // dependency array achieves this, as `isOpen` is the real trigger.
+    if (isMobile && isOpen) {
       setTempSelection(selectedChalets);
     }
-  }, [isOpen, selectedChalets]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMobile, isOpen]);
 
   // Close desktop dropdown on outside click
   useEffect(() => {

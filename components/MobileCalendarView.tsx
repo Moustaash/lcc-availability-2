@@ -1,6 +1,6 @@
 import React from 'react';
 import { Chalet, Booking, BookingStatus } from '../lib/types';
-// FIX: Use sub-path imports for date-fns to resolve module errors.
+// FIX: The barrel imports from 'date-fns' and 'date-fns/locale' were causing resolution errors. Switched to direct sub-path imports for functions and locales to resolve the issue.
 import format from 'date-fns/format';
 import endOfMonth from 'date-fns/endOfMonth';
 import startOfMonth from 'date-fns/startOfMonth';

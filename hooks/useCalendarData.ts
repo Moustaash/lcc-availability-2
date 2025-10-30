@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-// FIX: Use sub-path imports for date-fns to resolve module errors.
+// FIX: The barrel import from 'date-fns' was causing module resolution errors. Switched to direct sub-path imports for each function to resolve the issue.
 import addMonths from 'date-fns/addMonths';
 import parseISO from 'date-fns/parseISO';
 import subDays from 'date-fns/subDays';

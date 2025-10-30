@@ -1,5 +1,5 @@
 import React from 'react';
-// FIX: Use sub-path imports for date-fns to resolve module errors.
+// FIX: The barrel imports from 'date-fns' and 'date-fns/locale' were causing resolution errors. Switched to direct sub-path imports for functions and locales to resolve the issue.
 import format from 'date-fns/format';
 import fr from 'date-fns/locale/fr';
 import { Chalet } from '../lib/types';
