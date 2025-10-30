@@ -1,109 +1,98 @@
-import React, { useMemo } from 'react';
-// FIX: Consolidate date-fns imports to resolve module resolution errors.
+import React from 'react';
+import { Chalet, Booking, BookingStatus } from '../lib/types';
+// FIX: The `date-fns` functions were not callable because of incorrect imports. Changed to use named imports from the main 'date-fns' package to resolve module loading errors.
 import {
-  format,
   startOfMonth,
   endOfMonth,
   eachDayOfInterval,
+  format,
   isSameDay,
   isWithinInterval,
-  getDate,
-  subDays,
+  parseISO,
+  getDay,
 } from 'date-fns';
-import { fr } from 'date-fns/locale';
-import { Property, Booking, BookingStatus } from '../lib/types';
+import { fr } from 'date-fns/locale/fr';
 import { cn } from '../lib/utils';
+import { useMediaQuery } from '../hooks/useMediaQuery';
 
 interface AvailabilityGridProps {
-  bookings: Map<string, Booking[]>;
-  properties: Property[];
+  chalets: Chalet[];
+  bookings: Booking[];
   currentDate: Date;
   searchedDate: Date | null;
 }
 
-const AvailabilityGrid: React.FC<AvailabilityGridProps> = ({
-  bookings,
-  properties,
-  currentDate,
-  searchedDate,
-}) => {
-  const daysInMonth = useMemo(() => {
-    const start = startOfMonth(currentDate);
-    const end = endOfMonth(currentDate);
-    return eachDayOfInterval({ start, end });
-  }, [currentDate]);
+const statusColors: Record<BookingStatus, string> = {
+  [BookingStatus.CONFIRMED]: 'bg-status-confirmed',
+  [BookingStatus.OPTION]: 'bg-status-option',
+  [BookingStatus.BLOCKED]: 'bg-status-blocked',
+};
 
-  const getBookingStatusForDate = (propertySlug: string, date: Date): BookingStatus | null => {
-    const propertyBookings = bookings.get(propertySlug);
-    if (!propertyBookings) return null;
-
-    for (const booking of propertyBookings) {
-      // Booking end date is the checkout day, so it's not included in the stay.
-      if (isWithinInterval(date, { start: booking.start, end: subDays(booking.end, 1) })) {
-        return booking.status;
-      }
-    }
-    return null;
-  };
-
-  const statusColors: Record<BookingStatus, string> = {
-    [BookingStatus.CONFIRMED]: 'bg-status-confirmed',
-    [BookingStatus.OPTION]: 'bg-status-option',
-    [BookingStatus.BLOCKED]: 'bg-status-blocked',
-  };
+const AvailabilityGrid: React.FC<AvailabilityGridProps> = ({ chalets, bookings, currentDate, searchedDate }) => {
+  const isMobile = useMediaQuery('(max-width: 768px)');
   
-  const statusText: Record<BookingStatus, string> = {
-    [BookingStatus.CONFIRMED]: 'Réservé',
-    [BookingStatus.OPTION]: 'Option',
-    [BookingStatus.BLOCKED]: 'Propriétaire',
+  const monthStart = startOfMonth(currentDate);
+  const monthEnd = endOfMonth(currentDate);
+  const daysInMonth = eachDayOfInterval({ start: monthStart, end: monthEnd });
+
+  const getBookingForDay = (chaletId: string, day: Date): Booking | undefined => {
+    return bookings.find(booking => 
+      booking.chaletId === chaletId &&
+      isWithinInterval(day, { start: parseISO(booking.startDate), end: parseISO(booking.endDate) })
+    );
   };
 
-  if (properties.length === 0) {
-    return (
-      <div className="text-center py-10 text-gray-500 dark:text-gray-400">
-        Aucun chalet ne correspond à votre recherche.
-      </div>
-    );
-  }
+  const dayHeaderFormat = isMobile ? 'EEEEE' : 'EEE';
+  const dayNumberFormat = 'd';
 
   return (
-    <div className="overflow-x-auto relative">
-      <table className="min-w-full border-collapse">
-        <thead className="bg-gray-50 dark:bg-gray-800 sticky top-0 z-10">
+    <div className="overflow-hidden bg-white dark:bg-card-dark shadow-md sm:rounded-lg border border-gray-200 dark:border-border-dark">
+      <table className="w-full table-fixed border-collapse">
+        <thead className="bg-gray-50 dark:bg-background-dark sticky top-0 z-10">
           <tr>
-            <th className="p-2 border-r border-gray-200 dark:border-border-dark text-left text-sm font-semibold text-gray-600 dark:text-gray-300 w-48 min-w-[12rem] sticky left-0 bg-gray-50 dark:bg-gray-800 z-20">
+            <th scope="col" className="px-2 md:px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider sticky left-0 bg-gray-50 dark:bg-background-dark z-20 w-[90px] sm:w-[120px] lg:w-[180px]">
               Chalet
             </th>
-            {daysInMonth.map(day => (
-              <th key={day.toString()} className={cn(
-                "p-2 border-r border-gray-200 dark:border-border-dark text-center text-sm font-medium w-12",
-                isSameDay(day, new Date()) && "text-primary dark:text-blue-400",
-                searchedDate && isSameDay(day, searchedDate) && "bg-primary/20"
-              )}>
-                <div className="flex flex-col items-center">
-                  <span className="text-xs text-gray-500 dark:text-gray-400 capitalize">{format(day, 'eee', { locale: fr })}</span>
-                  <span>{getDate(day)}</span>
-                </div>
-              </th>
-            ))}
+            {daysInMonth.map(day => {
+              const dayOfWeek = getDay(day);
+              const isWeekend = dayOfWeek === 6 || dayOfWeek === 0; // Saturday or Sunday
+              return (
+                <th key={day.toString()} scope="col" className={cn(
+                  "py-2 md:py-3 text-center font-medium text-gray-500 dark:text-gray-400 uppercase",
+                  isWeekend ? 'bg-gray-100 dark:bg-black/10' : ''
+                )}>
+                  <div className="flex flex-col items-center text-[10px] md:text-xs leading-tight">
+                    <span className={isWeekend ? 'text-primary' : ''}>{format(day, dayHeaderFormat, { locale: fr })}</span>
+                    <span className={cn(
+                        "mt-1 text-base",
+                         searchedDate && isSameDay(day, searchedDate) ? "text-primary font-bold" : "text-gray-700 dark:text-gray-300"
+                    )}>{format(day, dayNumberFormat, { locale: fr })}</span>
+                  </div>
+                </th>
+              );
+            })}
           </tr>
         </thead>
-        <tbody>
-          {properties.map((property) => (
-            <tr key={property.slug} className="border-t border-gray-200 dark:border-border-dark even:bg-gray-50/50 dark:even:bg-white/5">
-              <td className="p-2 border-r border-gray-200 dark:border-border-dark sticky left-0 bg-white dark:bg-card-dark even:bg-gray-50/50 dark:even:bg-white/5 flex items-center gap-3 z-10">
-                <img src={property.imageUrl} alt={property.name} className="w-8 h-8 rounded-full object-cover" />
-                <span className="font-medium text-gray-800 dark:text-text-dark text-sm">{property.name}</span>
+        <tbody className="bg-white dark:bg-card-dark divide-y divide-gray-200 dark:divide-border-dark">
+          {chalets.map(chalet => (
+            <tr key={chalet.id}>
+              <td className="px-2 md:px-3 py-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white sticky left-0 bg-white dark:bg-card-dark z-10 border-r border-gray-200 dark:border-border-dark whitespace-normal break-words">
+                {chalet.name}
               </td>
               {daysInMonth.map(day => {
-                const status = getBookingStatusForDate(property.slug, day);
+                const booking = getBookingForDay(chalet.id, day);
+                const isSearched = searchedDate && isSameDay(day, searchedDate);
+                const dayOfWeek = getDay(day);
+                const isWeekend = dayOfWeek === 6 || dayOfWeek === 0;
+                
                 return (
-                  <td key={day.toString()} title={status ? statusText[status] : 'Disponible'} className={cn(
-                    "p-2 border-r border-gray-200 dark:border-border-dark text-center h-14 transition-colors",
-                    status ? statusColors[status] : 'hover:bg-green-100 dark:hover:bg-green-900/50 cursor-pointer',
-                    searchedDate && isSameDay(day, searchedDate) && "ring-2 ring-primary ring-inset"
+                  <td key={day.toString()} className={cn(
+                    "h-8 md:h-10 text-center text-sm border-l border-gray-200 dark:border-border-dark",
+                    booking ? statusColors[booking.status] : (isWeekend ? 'bg-gray-50 dark:bg-black/10' : 'bg-transparent'),
+                    isSearched ? 'ring-2 ring-inset ring-primary dark:ring-offset-background-dark' : '',
+                    'relative'
                   )}>
-                    <div className="w-full h-full"></div>
+                    {booking && <span className="sr-only">{booking.name}</span>}
                   </td>
                 );
               })}

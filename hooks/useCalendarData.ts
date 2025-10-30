@@ -1,114 +1,107 @@
 import { useState, useEffect } from 'react';
-// FIX: Consolidate date-fns imports to resolve module resolution errors.
-import { isBefore, parseISO } from 'date-fns';
-import { RawData, Booking, BookingStatus, SyncStatus, Property } from '../lib/types';
+// FIX: The `date-fns` functions were not callable because of incorrect imports. Changed to use named imports from the main 'date-fns' package to resolve module loading errors.
+import { addMonths, subMonths, parseISO, subDays } from 'date-fns';
+import { Chalet, Booking, SyncStatus, BookingStatus } from '../lib/types';
 
-type BookingsMap = Map<string, Booking[]>;
-
-interface ProcessedData {
-    bookingsMap: BookingsMap;
-    properties: Property[];
+// Raw types from data.json
+interface RawWeek {
+  start: string;
+  end: string;
+  status: 'booked' | 'option' | 'blocked';
+  price_total_eur?: number;
 }
 
-const processData = (rawData: RawData[]): ProcessedData => {
-  const bookingsMap: BookingsMap = new Map();
-  const properties: Property[] = [];
-  
-  if (!rawData || !rawData[0] || !rawData[0].lots) {
-    return { bookingsMap, properties };
+interface RawLot {
+  id: string;
+  label: string;
+  weeks: RawWeek[];
+}
+
+interface RawData {
+  lots: RawLot[];
+}
+
+const mapStatus = (status: 'booked' | 'option' | 'blocked'): BookingStatus => {
+  switch (status) {
+    case 'booked': return BookingStatus.CONFIRMED;
+    case 'option': return BookingStatus.OPTION;
+    case 'blocked': return BookingStatus.BLOCKED;
+    default: return BookingStatus.CONFIRMED;
   }
-
-  rawData[0].lots.forEach(lot => {
-    const propertySlug = lot.id;
-    const propertyName = lot.label;
-    
-    properties.push({
-      name: propertyName,
-      slug: propertySlug,
-      imageUrl: `https://picsum.photos/seed/${propertySlug}/40/40`
-    });
-    
-    bookingsMap.set(propertySlug, []);
-
-    lot.weeks.forEach(week => {
-      const start = parseISO(week.start);
-      const end = parseISO(week.end);
-      
-      if (isNaN(start.getTime()) || isNaN(end.getTime()) || !isBefore(start, end)) {
-          console.warn(`Invalid date range for ${propertyName}: ${week.start} to ${week.end}. Skipping.`);
-          return;
-      }
-
-      let status: BookingStatus;
-      switch(week.status) {
-        case 'booked':
-          status = BookingStatus.CONFIRMED;
-          break;
-        case 'option':
-          status = BookingStatus.OPTION;
-          break;
-        case 'blocked':
-          status = BookingStatus.BLOCKED;
-          break;
-        default:
-          return;
-      }
-      
-      const booking: Booking = {
-        propertyName,
-        propertySlug,
-        start,
-        end,
-        status,
-      };
-
-      const propertyBookings = bookingsMap.get(propertySlug)!;
-      propertyBookings.push(booking);
-    });
-  });
-
-  // Sort properties by name
-  properties.sort((a, b) => a.name.localeCompare(b.name));
-
-  // Sort bookings by start date for each property
-  bookingsMap.forEach((bookings, slug) => {
-    bookings.sort((a, b) => a.start.getTime() - b.start.getTime());
-    bookingsMap.set(slug, bookings);
-  });
-
-  return { bookingsMap, properties };
 };
 
+const statusToName = (status: BookingStatus): string => {
+    switch (status) {
+        case BookingStatus.CONFIRMED: return "Réservé";
+        case BookingStatus.OPTION: return "Option";
+        case BookingStatus.BLOCKED: return "Propriétaire";
+    }
+}
+
 export function useCalendarData() {
-  const [bookings, setBookings] = useState<BookingsMap>(new Map());
-  const [properties, setProperties] = useState<Property[]>([]);
   const [syncStatus, setSyncStatus] = useState<SyncStatus>(SyncStatus.IDLE);
-  const [error, setError] = useState<string | null>(null);
+  const [chalets, setChalets] = useState<Chalet[]>([]);
+  const [bookings, setBookings] = useState<Booking[]>([]);
+  const [currentDate, setCurrentDate] = useState(new Date(2025, 10, 1)); // Default to Nov 2025
 
   useEffect(() => {
     const fetchData = async () => {
       setSyncStatus(SyncStatus.SYNCING);
-      setError(null);
       try {
-        const response = await fetch('/data/site/availability/data.json');
+        const response = await fetch('/data.json');
         if (!response.ok) {
-          throw new Error(`Failed to fetch data: ${response.statusText}`);
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const rawData: RawData[] = await response.json();
+        const jsonData: RawData[] = await response.json();
         
-        const { bookingsMap, properties } = processData(rawData);
-        setBookings(bookingsMap);
-        setProperties(properties);
+        const data = jsonData[0];
+
+        const allChalets: Chalet[] = data.lots.map(lot => ({
+          id: lot.id,
+          name: lot.label,
+        }));
+
+        const allBookings: Booking[] = data.lots.flatMap(lot => 
+          lot.weeks.map((week, index) => {
+            const status = mapStatus(week.status);
+            // End date in data is the checkout day, so the last day of booking is the day before.
+            const endDate = subDays(parseISO(week.end), 1);
+
+            return {
+              id: `${lot.id}-${week.start}-${index}`,
+              chaletId: lot.id,
+              startDate: parseISO(week.start).toISOString(),
+              endDate: endDate.toISOString(),
+              status: status,
+              name: statusToName(status),
+              price: week.price_total_eur,
+            }
+          })
+        );
+        
+        setChalets(allChalets);
+        setBookings(allBookings);
         setSyncStatus(SyncStatus.SUCCESS);
-      } catch (err) {
-        const message = err instanceof Error ? err.message : 'An unknown error occurred';
-        setError(message);
+      } catch (error) {
+        console.error("Failed to fetch calendar data:", error);
         setSyncStatus(SyncStatus.ERROR);
       }
     };
 
     fetchData();
   }, []);
+  
+  const handlePrevMonth = () => setCurrentDate(prev => subMonths(prev, 1));
+  const handleNextMonth = () => setCurrentDate(prev => addMonths(prev, 1));
+  const handleDateChange = (date: Date) => setCurrentDate(date);
 
-  return { bookings, properties, syncStatus, error };
+  return {
+    syncStatus,
+    chalets,
+    bookings,
+    currentDate,
+    handlePrevMonth,
+    handleNextMonth,
+    handleDateChange,
+  };
 }

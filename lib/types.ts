@@ -1,30 +1,9 @@
-
-export interface Property {
-  name: string;
-  slug: string;
-  imageUrl: string;
+export enum SyncStatus {
+  IDLE = 'idle',
+  SYNCING = 'syncing',
+  SUCCESS = 'success',
+  ERROR = 'error',
 }
-
-export interface RawWeek {
-  start: string;
-  end: string;
-  status: 'booked' | 'option' | 'blocked';
-  price_total_eur?: number;
-}
-
-export interface RawLot {
-  id: string;
-  label: string;
-  weeks: RawWeek[];
-}
-
-export interface RawData {
-  version: string;
-  generated_at: string;
-  season: string;
-  lots: RawLot[];
-}
-
 
 export enum BookingStatus {
   CONFIRMED = 'CONFIRMED',
@@ -32,17 +11,18 @@ export enum BookingStatus {
   BLOCKED = 'BLOCKED',
 }
 
+// Application-internal types
 export interface Booking {
-  propertyName: string;
-  propertySlug: string;
-  start: Date;
-  end: Date;
+  id: string;
+  chaletId: string;
+  startDate: string; // ISO string format "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+  endDate: string; // ISO string format
   status: BookingStatus;
+  name: string;
+  price?: number;
 }
 
-export enum SyncStatus {
-  IDLE = 'IDLE',
-  SYNCING = 'SYNCING',
-  SUCCESS = 'SUCCESS',
-  ERROR = 'ERROR',
+export interface Chalet {
+  id: string;
+  name: string;
 }

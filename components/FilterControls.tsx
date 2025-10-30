@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
-// FIX: Consolidate date-fns imports to resolve module resolution errors.
+// FIX: The `date-fns` functions were not callable because of incorrect imports. Changed to use named imports from the main 'date-fns' package to resolve module loading errors.
 import { format, getMonth, getYear, setMonth, setYear } from 'date-fns';
-import { fr } from 'date-fns/locale';
+// FIX: The 'fr' locale was incorrectly imported. It should be imported from 'date-fns/locale/fr'.
+import { fr } from 'date-fns/locale/fr';
 
 interface FilterControlsProps {
   currentDate: Date;
