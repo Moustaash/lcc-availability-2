@@ -1,13 +1,15 @@
 import React from 'react';
 import { Chalet, Booking, BookingStatus } from '../lib/types';
-// FIX: Switched to individual date-fns sub-path imports to resolve module loading errors.
-import format from 'date-fns/format';
-import endOfMonth from 'date-fns/endOfMonth';
-import startOfMonth from 'date-fns/startOfMonth';
-import eachDayOfInterval from 'date-fns/eachDayOfInterval';
-import isWithinInterval from 'date-fns/isWithinInterval';
-import parseISO from 'date-fns/parseISO';
-import isSameDay from 'date-fns/isSameDay';
+// FIX: Switched to date-fns named imports to resolve module loading errors.
+import {
+  format,
+  endOfMonth,
+  startOfMonth,
+  eachDayOfInterval,
+  isWithinInterval,
+  parseISO,
+  isSameDay,
+} from 'date-fns';
 import fr from 'date-fns/locale/fr';
 import { cn } from '../lib/utils';
 
@@ -61,8 +63,8 @@ const AvailabilityGrid: React.FC<AvailabilityGridProps> = ({ chalets, bookings, 
   }
 
   return (
-    <div className="overflow-x-auto bg-white dark:bg-card-dark rounded-lg shadow">
-      <table className="w-full border-collapse">
+    <div className="overflow-hidden bg-white dark:bg-card-dark rounded-lg shadow">
+      <table className="w-full border-collapse table-fixed">
         <thead>
           <tr className="border-b border-gray-200 dark:border-border-dark">
             <th className="sticky left-0 bg-white dark:bg-card-dark p-2 text-left text-sm font-semibold w-40 z-10">Chalet</th>
