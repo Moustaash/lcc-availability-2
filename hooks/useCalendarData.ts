@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
-// FIX: Import date-fns functions as named exports from the main 'date-fns' package to resolve call signature errors.
-import { addMonths, parseISO, subDays, subMonths } from 'date-fns';
+// FIX: Use `import { default as ... }` syntax to correctly import date-fns functions, resolving "not callable" errors due to module interoperability issues.
+import { default as addMonths } from 'date-fns/addMonths';
+import { default as parseISO } from 'date-fns/parseISO';
+import { default as subDays } from 'date-fns/subDays';
+import { default as subMonths } from 'date-fns/subMonths';
 import { Chalet, Booking, SyncStatus, BookingStatus } from '../lib/types';
 import { chaletImages, chaletInfo } from '../lib/chalet-data';
 
@@ -22,11 +25,12 @@ interface RawData {
   lots: RawLot[];
 }
 
-const mapStatus = (status: 'booked' | 'option' | 'blocked'): BookingStatus => {
+const mapStatus = (status: 'booked' | 'option' | 'blocked' | 'free'): BookingStatus => {
   switch (status) {
     case 'booked': return BookingStatus.CONFIRMED;
     case 'option': return BookingStatus.OPTION;
     case 'blocked': return BookingStatus.BLOCKED;
+    case 'free': return BookingStatus.FREE;
     default: return BookingStatus.CONFIRMED;
   }
 };
@@ -36,6 +40,7 @@ const statusToName = (status: BookingStatus): string => {
         case BookingStatus.CONFIRMED: return "Réservé";
         case BookingStatus.OPTION: return "Option";
         case BookingStatus.BLOCKED: return "Propriétaire";
+        case BookingStatus.FREE: return "Disponible";
     }
 }
 
@@ -70,9 +75,8 @@ export function useCalendarData() {
 
         const allBookings: Booking[] = data.lots.flatMap(lot => 
           lot.weeks
-            .filter(week => week.status !== 'free')
             .map((week, index) => {
-              const status = mapStatus(week.status as 'booked' | 'option' | 'blocked');
+              const status = mapStatus(week.status);
               // End date in data is the checkout day, so the last day of booking is the day before.
               const endDate = subDays(parseISO(week.end), 1);
 

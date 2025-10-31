@@ -9,6 +9,7 @@ export enum BookingStatus {
   CONFIRMED = 'CONFIRMED',
   OPTION = 'OPTION',
   BLOCKED = 'BLOCKED',
+  FREE = 'FREE',
 }
 
 // Application-internal types

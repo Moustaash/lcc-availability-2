@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import { Chalet, Booking, BookingStatus } from '../lib/types';
-// FIX: Import date-fns functions as named exports from the main 'date-fns' package to resolve call signature errors.
-import {
-  format,
-  endOfMonth,
-  startOfMonth,
-  eachDayOfInterval,
-  isWithinInterval,
-  parseISO,
-  isSameDay,
-} from 'date-fns';
+// FIX: Use `import { default as ... }` syntax to correctly import date-fns functions, resolving "not callable" errors due to module interoperability issues.
+import { default as format } from 'date-fns/format';
+import { default as endOfMonth } from 'date-fns/endOfMonth';
+import { default as startOfMonth } from 'date-fns/startOfMonth';
+import { default as eachDayOfInterval } from 'date-fns/eachDayOfInterval';
+import { default as isWithinInterval } from 'date-fns/isWithinInterval';
+import { default as parseISO } from 'date-fns/parseISO';
+import { default as isSameDay } from 'date-fns/isSameDay';
 import fr from 'date-fns/locale/fr';
 import { cn } from '../lib/utils';
 import Tooltip from './Tooltip';
@@ -29,7 +27,7 @@ const getBookingForDay = (day: Date, bookings: Booking[], chaletId: string): Boo
   );
 };
 
-const getStatusForDay = (day: Date, bookings: Booking[], chaletId: string): { text: string; color: string } => {
+const getStatusForDay = (day: Date, bookings: Booking[], chaletId: string): { text: string; color: string; price?: number } | null => {
   const booking = getBookingForDay(day, bookings, chaletId);
   if (booking) {
     switch (booking.status) {
@@ -39,15 +37,18 @@ const getStatusForDay = (day: Date, bookings: Booking[], chaletId: string): { te
         return { text: 'Option', color: 'text-status-option' };
       case BookingStatus.BLOCKED:
         return { text: 'Propriétaire', color: 'text-status-blocked' };
+      case BookingStatus.FREE:
+        return { text: 'Disponible', color: 'text-green-500', price: booking.price };
     }
   }
-  return { text: 'Disponible', color: 'text-green-500' };
+  return null;
 };
 
 const statusColors: Record<BookingStatus, string> = {
   [BookingStatus.CONFIRMED]: 'bg-status-confirmed',
   [BookingStatus.OPTION]: 'bg-status-option',
   [BookingStatus.BLOCKED]: 'bg-status-blocked',
+  [BookingStatus.FREE]: 'bg-green-100 dark:bg-green-900/20',
 };
 
 const AvailabilityGrid: React.FC<AvailabilityGridProps> = ({ chalets, bookings, currentDate, selectedDate, onDateSelect }) => {
@@ -72,6 +73,12 @@ const AvailabilityGrid: React.FC<AvailabilityGridProps> = ({ chalets, bookings, 
   };
 
   const showTooltip = (e: React.MouseEvent, booking: Booking) => {
+    const priceInfo = booking.status === BookingStatus.FREE && booking.price ? (
+      <div>
+        <span className="font-semibold">Prix:</span> {new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 }).format(booking.price)}
+      </div>
+    ) : null;
+
     const content = (
       <div className="flex flex-col gap-1 whitespace-nowrap">
         <div className="font-bold">{booking.name}</div>
@@ -81,6 +88,7 @@ const AvailabilityGrid: React.FC<AvailabilityGridProps> = ({ chalets, bookings, 
         <div>
           <span className="font-semibold">Fin:</span> {format(parseISO(booking.endDate), 'd MMMM yyyy', { locale: fr })}
         </div>
+        {priceInfo}
       </div>
     );
 
@@ -139,9 +147,14 @@ const AvailabilityGrid: React.FC<AvailabilityGridProps> = ({ chalets, bookings, 
                 <td className="sticky left-0 bg-white dark:bg-card-dark p-2 text-sm w-40 z-10">
                     <div className="font-semibold">{chalet.name}</div>
                     {statusInfo && (
-                        <div className={cn("text-xs font-medium", statusInfo.color)}>
-                            {statusInfo.text}
-                        </div>
+                      <div className={cn("text-xs font-medium", statusInfo.color)}>
+                        {statusInfo.text}
+                        {statusInfo.price && (
+                          <span className="ml-1 font-normal text-gray-600 dark:text-gray-400">
+                            ({new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 }).format(statusInfo.price)})
+                          </span>
+                        )}
+                      </div>
                     )}
                 </td>
                 {days.map(day => {
@@ -156,14 +169,21 @@ const AvailabilityGrid: React.FC<AvailabilityGridProps> = ({ chalets, bookings, 
                       onMouseEnter={(e) => booking && showTooltip(e, booking)}
                       onMouseLeave={hideTooltip}
                       className={cn(
-                          "h-12 text-center border-l border-gray-200 dark:border-border-dark cursor-pointer transition-colors", 
-                          booking ? statusColors[booking.status] : 'bg-green-100 dark:bg-green-900/20',
-                          !booking && 'hover:bg-green-200 dark:hover:bg-green-900/40',
+                          "h-12 text-center border-l border-gray-200 dark:border-border-dark cursor-pointer transition-colors relative", 
+                          booking ? statusColors[booking.status] : 'bg-gray-50 dark:bg-gray-800/50',
+                          booking?.status === BookingStatus.FREE && 'hover:bg-green-200 dark:hover:bg-green-900/40',
                           isSaturday && "border-r-2 border-r-gray-300 dark:border-r-gray-600",
                           isSelected && "bg-primary/10 dark:bg-primary/20"
                       )}
                       title=""
                     >
+                      {booking?.status === BookingStatus.FREE && booking.price && (
+                        <div className="absolute inset-0 flex items-center justify-center p-1">
+                          <span className="text-xs font-bold text-green-900 dark:text-green-200 leading-tight">
+                            {new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(booking.price)}
+                          </span>
+                        </div>
+                      )}
                     </td>
                   );
                 })}

@@ -1,19 +1,17 @@
 import React from 'react';
 import { Chalet, Booking, BookingStatus } from '../lib/types';
-// FIX: Import date-fns functions as named exports from the main 'date-fns' package to resolve call signature errors.
-import {
-  format,
-  endOfMonth,
-  startOfMonth,
-  eachDayOfInterval,
-  isWithinInterval,
-  parseISO,
-  startOfWeek,
-  endOfWeek,
-  isSameMonth,
-  isToday,
-  isSameDay,
-} from 'date-fns';
+// FIX: Use `import { default as ... }` syntax to correctly import date-fns functions, resolving "not callable" errors due to module interoperability issues.
+import { default as format } from 'date-fns/format';
+import { default as endOfMonth } from 'date-fns/endOfMonth';
+import { default as startOfMonth } from 'date-fns/startOfMonth';
+import { default as eachDayOfInterval } from 'date-fns/eachDayOfInterval';
+import { default as isWithinInterval } from 'date-fns/isWithinInterval';
+import { default as parseISO } from 'date-fns/parseISO';
+import { default as startOfWeek } from 'date-fns/startOfWeek';
+import { default as endOfWeek } from 'date-fns/endOfWeek';
+import { default as isSameMonth } from 'date-fns/isSameMonth';
+import { default as isToday } from 'date-fns/isToday';
+import { default as isSameDay } from 'date-fns/isSameDay';
 import fr from 'date-fns/locale/fr';
 import { cn } from '../lib/utils';
 
@@ -49,9 +47,10 @@ const statusColors: Record<BookingStatus, string> = {
   [BookingStatus.CONFIRMED]: 'bg-status-confirmed',
   [BookingStatus.OPTION]: 'bg-status-option',
   [BookingStatus.BLOCKED]: 'bg-status-blocked',
+  [BookingStatus.FREE]: 'bg-green-500',
 };
 
-const getStatusForDay = (day: Date, bookings: Booking[], chaletId: string): { text: string; color: string } => {
+const getStatusForDay = (day: Date, bookings: Booking[], chaletId: string): { text: string; color: string; price?: number } | null => {
     const booking = getBookingForDay(day, bookings, chaletId);
     if (booking) {
       switch (booking.status) {
@@ -61,9 +60,11 @@ const getStatusForDay = (day: Date, bookings: Booking[], chaletId: string): { te
           return { text: 'Option', color: 'text-status-option' };
         case BookingStatus.BLOCKED:
           return { text: 'Propriétaire', color: 'text-status-blocked' };
+        case BookingStatus.FREE:
+          return { text: 'Disponible', color: 'text-green-500', price: booking.price };
       }
     }
-    return { text: 'Disponible', color: 'text-green-500' };
+    return null;
   };
 
 const MobileCalendarView: React.FC<MobileCalendarViewProps> = ({ chalets, bookings, currentDate, selectedDate, onDateSelect }) => {
@@ -99,7 +100,7 @@ const MobileCalendarView: React.FC<MobileCalendarViewProps> = ({ chalets, bookin
 
             const dayBookings = chalets.map(chalet => {
               return getBookingForDay(day, bookings, chalet.id);
-            }).filter((b): b is Booking => !!b);
+            }).filter((b): b is Booking => !!b && b.status !== BookingStatus.FREE);
 
             const dotsToShow = dayBookings.slice(0, MAX_DOTS_DISPLAY);
             const remainingCount = dayBookings.length - MAX_DOTS_DISPLAY;
@@ -151,10 +152,18 @@ const MobileCalendarView: React.FC<MobileCalendarViewProps> = ({ chalets, bookin
           <ul className="space-y-2 max-h-60 overflow-y-auto">
             {chalets.map(chalet => {
               const status = getStatusForDay(selectedDate, bookings, chalet.id);
+              if (!status) return null;
               return (
                 <li key={chalet.id} className="flex justify-between items-center text-sm">
                   <span className="font-medium">{chalet.name}</span>
-                  <span className={cn("font-semibold", status.color)}>{status.text}</span>
+                  <div className="flex items-center gap-2">
+                    {status.price && (
+                        <span className="font-semibold text-gray-700 dark:text-gray-300">
+                            {new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 }).format(status.price)}
+                        </span>
+                    )}
+                    <span className={cn("font-semibold", status.color)}>{status.text}</span>
+                  </div>
                 </li>
               );
             })}
