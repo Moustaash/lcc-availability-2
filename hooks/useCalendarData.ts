@@ -1,10 +1,6 @@
 import { useState, useEffect } from 'react';
-// FIX: Changed date-fns imports to use direct paths for each function to resolve module resolution errors.
-import addMonths from 'date-fns/addMonths';
-import isSameDay from 'date-fns/isSameDay';
-import parseISO from 'date-fns/parseISO';
-import subDays from 'date-fns/subDays';
-import subMonths from 'date-fns/subMonths';
+// FIX: Changed date-fns imports to use named imports from the main 'date-fns' package to resolve call signature errors.
+import { addMonths, isSameDay, parseISO, subDays, subMonths } from 'date-fns';
 import { Chalet, Booking, SyncStatus, BookingStatus } from '../lib/types';
 import { chaletImages, chaletInfo } from '../lib/chalet-data';
 
@@ -57,19 +53,20 @@ export function useCalendarData() {
     const fetchData = async () => {
       setSyncStatus(SyncStatus.SYNCING);
       try {
-        const response = await fetch('/data.json'); // Use root path for local dev and production server
+        const response = await fetch('/data/site/availability/data.json'); // Path for production server
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         
-        const data: RawData = await response.json();
+        const jsonData: RawData[] = await response.json();
         
-        if (!data || !data.lots) {
-          console.warn("Le fichier data.json est vide ou mal formaté.");
+        if (!jsonData || jsonData.length === 0) {
+          console.warn("Le fichier data.json est vide ou ne contient pas de données.");
           setSyncStatus(SyncStatus.ERROR);
           return; 
         }
 
+        const data = jsonData[0];
         setLastGeneratedAt(data.generated_at);
 
         const allChalets: Chalet[] = data.lots.map(lot => {

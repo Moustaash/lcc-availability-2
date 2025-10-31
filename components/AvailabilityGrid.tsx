@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
 import { Chalet, Booking, BookingStatus } from '../lib/types';
-// FIX: Changed date-fns imports to use direct paths for functions and locales to resolve module resolution errors.
-import eachDayOfInterval from 'date-fns/eachDayOfInterval';
-import endOfMonth from 'date-fns/endOfMonth';
-import format from 'date-fns/format';
-import isSameDay from 'date-fns/isSameDay';
-import isWithinInterval from 'date-fns/isWithinInterval';
-import parseISO from 'date-fns/parseISO';
-import startOfMonth from 'date-fns/startOfMonth';
-import fr from 'date-fns/locale/fr';
+// FIX: Changed date-fns imports to use named imports from 'date-fns' and 'date-fns/locale' to resolve call signature errors.
+import { eachDayOfInterval, endOfMonth, format, isSameDay, isWithinInterval, parseISO, startOfMonth } from 'date-fns';
+import { fr } from 'date-fns/locale';
 import { cn } from '../lib/utils';
 import Tooltip from './Tooltip';
 
