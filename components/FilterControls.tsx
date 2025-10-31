@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-// FIX: Changed date-fns imports to use direct paths, resolving module resolution errors.
-import format from 'date-fns/format';
-import fr from 'date-fns/locale/fr';
+// FIX: Consolidate date-fns imports to resolve module resolution errors.
+import { format } from 'date-fns';
+import { fr } from 'date-fns/locale';
 import { Chalet } from '../lib/types';
 import ChaletSelector from './ChaletSelector';
 import DatePicker from './DatePicker';

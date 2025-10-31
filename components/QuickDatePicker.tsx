@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
-// FIX: Changed date-fns imports to use direct paths, resolving module resolution errors.
-import format from 'date-fns/format';
-import startOfMonth from 'date-fns/startOfMonth';
-import endOfMonth from 'date-fns/endOfMonth';
-import eachDayOfInterval from 'date-fns/eachDayOfInterval';
-import startOfWeek from 'date-fns/startOfWeek';
-import endOfWeek from 'date-fns/endOfWeek';
-import isSameMonth from 'date-fns/isSameMonth';
-import isToday from 'date-fns/isToday';
-import isSameDay from 'date-fns/isSameDay';
-import addMonths from 'date-fns/addMonths';
-import subMonths from 'date-fns/subMonths';
-import fr from 'date-fns/locale/fr';
+// FIX: Consolidate date-fns imports to resolve module resolution errors.
+import {
+  format,
+  startOfMonth,
+  endOfMonth,
+  eachDayOfInterval,
+  startOfWeek,
+  endOfWeek,
+  isSameMonth,
+  isToday,
+  isSameDay,
+  addMonths,
+  subMonths,
+} from 'date-fns';
+import { fr } from 'date-fns/locale';
 import { cn } from '../lib/utils';
 
 interface QuickDatePickerProps {

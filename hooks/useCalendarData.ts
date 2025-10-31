@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
-// FIX: Changed date-fns imports to use direct paths, resolving module resolution errors.
-import addMonths from 'date-fns/addMonths';
-import parseISO from 'date-fns/parseISO';
-import subDays from 'date-fns/subDays';
-import subMonths from 'date-fns/subMonths';
+// FIX: Consolidate date-fns imports to resolve module resolution errors.
+import { addMonths, parseISO, subDays, subMonths } from 'date-fns';
 import { Chalet, Booking, SyncStatus, BookingStatus } from '../lib/types';
 import { chaletImages, chaletInfo } from '../lib/chalet-data';
 
@@ -60,8 +57,19 @@ export function useCalendarData() {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
+        
         const jsonData: RawData[] = await response.json();
         
+        // ======================================================
+        // CORRECTION : VÉRIFIER SI LES DONNÉES SONT VIDES
+        // ======================================================
+        if (!jsonData || jsonData.length === 0) {
+          console.warn("Le fichier data.json est vide ou mal formaté.");
+          setSyncStatus(SyncStatus.ERROR); // Ou SUCCESS si un état vide est acceptable
+          return; 
+        }
+        // ======================================================
+
         const data = jsonData[0];
         setLastGeneratedAt(data.generated_at);
 
@@ -99,6 +107,7 @@ export function useCalendarData() {
         setBookings(allBookings);
         setSyncStatus(SyncStatus.SUCCESS);
       } catch (error) {
+        // Cette erreur se déclenche si le JSON est invalide (ex: texte vide)
         console.error("Failed to fetch calendar data:", error);
         setSyncStatus(SyncStatus.ERROR);
       }

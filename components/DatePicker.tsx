@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
-// FIX: Changed date-fns imports to use direct paths, resolving module resolution errors.
-import format from 'date-fns/format';
-import getYear from 'date-fns/getYear';
-import setMonth from 'date-fns/setMonth';
-import setYear from 'date-fns/setYear';
-import fr from 'date-fns/locale/fr';
+// FIX: Consolidate date-fns imports to resolve module resolution errors.
+import { format, getYear, setMonth, setYear } from 'date-fns';
+import { fr } from 'date-fns/locale';
 import { cn } from '../lib/utils';
 
 interface DatePickerProps {
