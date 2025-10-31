@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Chalet, Booking, BookingStatus } from '../lib/types';
-// FIX: Use `import { default as ... }` syntax to correctly import date-fns functions, resolving "not callable" errors due to module interoperability issues.
-import { default as format } from 'date-fns/format';
-import { default as endOfMonth } from 'date-fns/endOfMonth';
-import { default as startOfMonth } from 'date-fns/startOfMonth';
-import { default as eachDayOfInterval } from 'date-fns/eachDayOfInterval';
-import { default as isWithinInterval } from 'date-fns/isWithinInterval';
-import { default as parseISO } from 'date-fns/parseISO';
-import { default as isSameDay } from 'date-fns/isSameDay';
+// FIX: Changed date-fns imports to use direct paths, resolving module resolution errors.
+import format from 'date-fns/format';
+import endOfMonth from 'date-fns/endOfMonth';
+import startOfMonth from 'date-fns/startOfMonth';
+import eachDayOfInterval from 'date-fns/eachDayOfInterval';
+import isWithinInterval from 'date-fns/isWithinInterval';
+import parseISO from 'date-fns/parseISO';
+import isSameDay from 'date-fns/isSameDay';
 import fr from 'date-fns/locale/fr';
 import { cn } from '../lib/utils';
 import Tooltip from './Tooltip';
@@ -48,7 +48,41 @@ const statusColors: Record<BookingStatus, string> = {
   [BookingStatus.CONFIRMED]: 'bg-status-confirmed',
   [BookingStatus.OPTION]: 'bg-status-option',
   [BookingStatus.BLOCKED]: 'bg-status-blocked',
-  [BookingStatus.FREE]: 'bg-green-100 dark:bg-green-900/20',
+  [BookingStatus.FREE]: 'bg-gray-50 dark:bg-gray-800/50', // Fallback, will be replaced by heatmap
+};
+
+const statusHexColors: Record<string, string> = {
+  [BookingStatus.CONFIRMED]: '#3b82f6',
+  [BookingStatus.OPTION]: '#f59e0b',
+  [BookingStatus.BLOCKED]: '#6b7280',
+};
+
+const getPriceHeatmapClass = (price: number | undefined): string => {
+  if (typeof price !== 'number') return statusColors[BookingStatus.FREE];
+  if (price < 5000) return 'bg-green-300 dark:bg-green-700';
+  if (price < 10000) return 'bg-green-200 dark:bg-green-800';
+  return 'bg-green-100 dark:bg-green-900';
+};
+
+const getTransitionStyle = (booking: Booking, day: Date): React.CSSProperties => {
+  if (!booking || booking.status === BookingStatus.FREE) return {};
+
+  const isStartDate = isSameDay(day, parseISO(booking.startDate));
+  const isEndDate = isSameDay(day, parseISO(booking.endDate));
+
+  if (isStartDate && isEndDate) return {}; // Don't apply for single-day bookings
+
+  const color = statusHexColors[booking.status];
+  if (!color) return {};
+
+  if (isStartDate) {
+    return { backgroundImage: `linear-gradient(to right, transparent 30%, ${color})`};
+  }
+  if (isEndDate) {
+    return { backgroundImage: `linear-gradient(to left, transparent 30%, ${color})`};
+  }
+
+  return {};
 };
 
 const AvailabilityGrid: React.FC<AvailabilityGridProps> = ({ chalets, bookings, currentDate, selectedDate, onDateSelect }) => {
@@ -162,6 +196,14 @@ const AvailabilityGrid: React.FC<AvailabilityGridProps> = ({ chalets, bookings, 
                   const isSaturday = format(day, 'E', { locale: fr }) === 'sam.';
                   const isSelected = selectedDate && isSameDay(day, selectedDate);
 
+                  const cellBgClass = booking
+                    ? booking.status === BookingStatus.FREE
+                      ? getPriceHeatmapClass(booking.price)
+                      : statusColors[booking.status]
+                    : 'bg-gray-50 dark:bg-gray-800/50';
+
+                  const transitionStyle = booking ? getTransitionStyle(booking, day) : {};
+
                   return (
                     <td 
                       key={day.toISOString()} 
@@ -170,20 +212,14 @@ const AvailabilityGrid: React.FC<AvailabilityGridProps> = ({ chalets, bookings, 
                       onMouseLeave={hideTooltip}
                       className={cn(
                           "h-12 text-center border-l border-gray-200 dark:border-border-dark cursor-pointer transition-colors relative", 
-                          booking ? statusColors[booking.status] : 'bg-gray-50 dark:bg-gray-800/50',
-                          booking?.status === BookingStatus.FREE && 'hover:bg-green-200 dark:hover:bg-green-900/40',
+                          cellBgClass,
+                          booking?.status === BookingStatus.FREE && 'hover:brightness-90',
                           isSaturday && "border-r-2 border-r-gray-300 dark:border-r-gray-600",
                           isSelected && "bg-primary/10 dark:bg-primary/20"
                       )}
+                      style={transitionStyle}
                       title=""
                     >
-                      {booking?.status === BookingStatus.FREE && booking.price && (
-                        <div className="absolute inset-0 flex items-center justify-center p-1">
-                          <span className="text-xs font-bold text-green-900 dark:text-green-200 leading-tight">
-                            {new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(booking.price)}
-                          </span>
-                        </div>
-                      )}
                     </td>
                   );
                 })}

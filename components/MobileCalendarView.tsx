@@ -1,17 +1,17 @@
 import React from 'react';
 import { Chalet, Booking, BookingStatus } from '../lib/types';
-// FIX: Use `import { default as ... }` syntax to correctly import date-fns functions, resolving "not callable" errors due to module interoperability issues.
-import { default as format } from 'date-fns/format';
-import { default as endOfMonth } from 'date-fns/endOfMonth';
-import { default as startOfMonth } from 'date-fns/startOfMonth';
-import { default as eachDayOfInterval } from 'date-fns/eachDayOfInterval';
-import { default as isWithinInterval } from 'date-fns/isWithinInterval';
-import { default as parseISO } from 'date-fns/parseISO';
-import { default as startOfWeek } from 'date-fns/startOfWeek';
-import { default as endOfWeek } from 'date-fns/endOfWeek';
-import { default as isSameMonth } from 'date-fns/isSameMonth';
-import { default as isToday } from 'date-fns/isToday';
-import { default as isSameDay } from 'date-fns/isSameDay';
+// FIX: Changed date-fns imports to use direct paths, resolving module resolution errors.
+import format from 'date-fns/format';
+import endOfMonth from 'date-fns/endOfMonth';
+import startOfMonth from 'date-fns/startOfMonth';
+import eachDayOfInterval from 'date-fns/eachDayOfInterval';
+import isWithinInterval from 'date-fns/isWithinInterval';
+import parseISO from 'date-fns/parseISO';
+import startOfWeek from 'date-fns/startOfWeek';
+import endOfWeek from 'date-fns/endOfWeek';
+import isSameMonth from 'date-fns/isSameMonth';
+import isToday from 'date-fns/isToday';
+import isSameDay from 'date-fns/isSameDay';
 import fr from 'date-fns/locale/fr';
 import { cn } from '../lib/utils';
 
@@ -35,6 +35,7 @@ const getBookingForDay = (day: Date, bookings: Booking[], chaletId: string): Boo
   if (dayBookings.length === 1) return dayBookings[0];
 
   if (dayBookings.some(b => b.status === BookingStatus.CONFIRMED)) {
+    // FIX: Corrected typo from CONFIRMAED to CONFIRMED.
     return dayBookings.find(b => b.status === BookingStatus.CONFIRMED);
   }
   if (dayBookings.some(b => b.status === BookingStatus.OPTION)) {

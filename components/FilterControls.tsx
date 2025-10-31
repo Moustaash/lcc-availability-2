@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-// FIX: Use `import { default as ... }` syntax to correctly import date-fns functions, resolving "not callable" errors due to module interoperability issues.
-import { default as format } from 'date-fns/format';
+// FIX: Changed date-fns imports to use direct paths, resolving module resolution errors.
+import format from 'date-fns/format';
 import fr from 'date-fns/locale/fr';
 import { Chalet } from '../lib/types';
 import ChaletSelector from './ChaletSelector';
 import DatePicker from './DatePicker';
+import QuickDatePicker from './QuickDatePicker';
 
 interface FilterControlsProps {
   currentDate: Date;
@@ -14,6 +15,8 @@ interface FilterControlsProps {
   chalets: Chalet[];
   selectedChalets: Chalet[];
   onSelectedChaletsChange: (chalets: Chalet[]) => void;
+  selectedDate: Date | null;
+  onDateSelect: (date: Date | null) => void;
 }
 
 const FilterControls: React.FC<FilterControlsProps> = ({
@@ -24,33 +27,51 @@ const FilterControls: React.FC<FilterControlsProps> = ({
   chalets,
   selectedChalets,
   onSelectedChaletsChange,
+  selectedDate,
+  onDateSelect,
 }) => {
   const [isDatePickerOpen, setDatePickerOpen] = useState(false);
+  const [isQuickDatePickerOpen, setQuickDatePickerOpen] = useState(false);
   const datePickerRef = useRef<HTMLDivElement>(null);
+  const quickDatePickerRef = useRef<HTMLDivElement>(null);
+
+  const handleClickOutside = (event: MouseEvent, ref: React.RefObject<HTMLDivElement>, close: () => void) => {
+    if (ref.current && !ref.current.contains(event.target as Node)) {
+      close();
+    }
+  };
 
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (datePickerRef.current && !datePickerRef.current.contains(event.target as Node)) {
-        setDatePickerOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [datePickerRef]);
+    const handleMonthPickerClickOutside = (event: MouseEvent) => handleClickOutside(event, datePickerRef, () => setDatePickerOpen(false));
+    document.addEventListener("mousedown", handleMonthPickerClickOutside);
+    return () => document.removeEventListener("mousedown", handleMonthPickerClickOutside);
+  }, []);
+
+  useEffect(() => {
+    const handleQuickPickerClickOutside = (event: MouseEvent) => handleClickOutside(event, quickDatePickerRef, () => setQuickDatePickerOpen(false));
+    document.addEventListener("mousedown", handleQuickPickerClickOutside);
+    return () => document.removeEventListener("mousedown", handleQuickPickerClickOutside);
+  }, []);
+
+  const handleQuickDateSelect = (date: Date) => {
+    onDateChange(date); // Switch view to the new month
+    onDateSelect(date); // Select the specific day
+    setQuickDatePickerOpen(false);
+  };
 
   return (
     <div className="mb-6 p-4 bg-white dark:bg-card-dark rounded-lg shadow">
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-        {/* Month Navigator */}
-        <div className="flex items-center gap-2" ref={datePickerRef}>
+        {/* Month Navigator & Date Pickers */}
+        <div className="flex items-center gap-2">
           <button onClick={onPrevMonth} className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="Previous month">
             <span className="material-symbols-outlined">chevron_left</span>
           </button>
 
-          <div className="relative">
+          <div className="relative" ref={datePickerRef}>
              <button 
               onClick={() => setDatePickerOpen(prev => !prev)}
-              className="text-lg font-semibold w-36 text-center capitalize p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
+              className="text-lg font-semibold w-44 text-center capitalize p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
             >
               {format(currentDate, 'MMMM yyyy', { locale: fr })}
             </button>
@@ -66,6 +87,19 @@ const FilterControls: React.FC<FilterControlsProps> = ({
           <button onClick={onNextMonth} className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="Next month">
             <span className="material-symbols-outlined">chevron_right</span>
           </button>
+
+          <div className="relative" ref={quickDatePickerRef}>
+            <button onClick={() => setQuickDatePickerOpen(p => !p)} className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="Select a date">
+              <span className="material-symbols-outlined">calendar_month</span>
+            </button>
+            {isQuickDatePickerOpen && (
+              <QuickDatePicker
+                currentDate={currentDate}
+                selectedDate={selectedDate}
+                onSelect={handleQuickDateSelect}
+              />
+            )}
+          </div>
         </div>
         
         {/* Chalet Selector */}

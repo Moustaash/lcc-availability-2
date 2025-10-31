@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-// FIX: Use `import { default as ... }` syntax to correctly import date-fns functions, resolving "not callable" errors due to module interoperability issues.
-import { default as addMonths } from 'date-fns/addMonths';
-import { default as parseISO } from 'date-fns/parseISO';
-import { default as subDays } from 'date-fns/subDays';
-import { default as subMonths } from 'date-fns/subMonths';
+// FIX: Changed date-fns imports to use direct paths, resolving module resolution errors.
+import addMonths from 'date-fns/addMonths';
+import parseISO from 'date-fns/parseISO';
+import subDays from 'date-fns/subDays';
+import subMonths from 'date-fns/subMonths';
 import { Chalet, Booking, SyncStatus, BookingStatus } from '../lib/types';
 import { chaletImages, chaletInfo } from '../lib/chalet-data';
 
@@ -22,6 +22,7 @@ interface RawLot {
 }
 
 interface RawData {
+  generated_at: string;
   lots: RawLot[];
 }
 
@@ -49,6 +50,7 @@ export function useCalendarData() {
   const [chalets, setChalets] = useState<Chalet[]>([]);
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [currentDate, setCurrentDate] = useState(new Date(2025, 10, 1)); // Default to Nov 2025
+  const [lastGeneratedAt, setLastGeneratedAt] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,6 +63,7 @@ export function useCalendarData() {
         const jsonData: RawData[] = await response.json();
         
         const data = jsonData[0];
+        setLastGeneratedAt(data.generated_at);
 
         const allChalets: Chalet[] = data.lots.map(lot => {
           const slug = lot.id.toLowerCase();
@@ -113,6 +116,7 @@ export function useCalendarData() {
     chalets,
     bookings,
     currentDate,
+    lastGeneratedAt,
     handlePrevMonth,
     handleNextMonth,
     handleDateChange,

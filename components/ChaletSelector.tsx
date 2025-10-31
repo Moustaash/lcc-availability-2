@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import { Chalet } from '../lib/types';
 import { cn } from '../lib/utils';
@@ -41,13 +41,15 @@ const ChaletListItem: React.FC<{
  * By defining it outside the parent, it won't be re-created on re-renders, preventing animation restarts.
  */
 const MobileModal: React.FC<{
-  chalets: Chalet[];
+  filteredChalets: Chalet[];
   tempSelection: Chalet[];
+  searchQuery: string;
+  onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onToggle: (chalet: Chalet) => void;
   onClose: () => void;
   onReset: () => void;
   onApply: () => void;
-}> = ({ chalets, tempSelection, onToggle, onClose, onReset, onApply }) => (
+}> = ({ filteredChalets, tempSelection, searchQuery, onSearchChange, onToggle, onClose, onReset, onApply }) => (
   ReactDOM.createPortal(
     <div 
       className="fixed inset-0 bg-black/60 z-50 flex flex-col justify-end animate-fade-in"
@@ -63,9 +65,18 @@ const MobileModal: React.FC<{
                     <span className="material-symbols-outlined">close</span>
                 </button>
             </header>
+            <div className="p-3 border-b border-gray-200 dark:border-border-dark flex-shrink-0">
+              <input 
+                type="search"
+                placeholder="Rechercher un chalet..."
+                value={searchQuery}
+                onChange={onSearchChange}
+                className="w-full p-2 border border-gray-300 dark:border-border-dark rounded-md bg-gray-50 dark:bg-background-dark focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
             <div className="flex-grow overflow-y-auto">
               <ul className="divide-y divide-gray-200 dark:divide-border-dark">
-                {chalets.map(chalet => (
+                {filteredChalets.map(chalet => (
                   <ChaletListItem 
                     key={chalet.id}
                     chalet={chalet}
@@ -102,18 +113,29 @@ const MobileModal: React.FC<{
  * The desktop dropdown menu.
  */
 const DesktopDropdown: React.FC<{
-  chalets: Chalet[];
+  filteredChalets: Chalet[];
   selectedChalets: Chalet[];
+  searchQuery: string;
+  onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onToggle: (chalet: Chalet) => void;
   onReset: () => void;
-}> = ({ chalets, selectedChalets, onToggle, onReset }) => (
+}> = ({ filteredChalets, selectedChalets, searchQuery, onSearchChange, onToggle, onReset }) => (
   <div 
-    className="absolute z-20 top-full mt-1 w-full sm:w-80 bg-white dark:bg-card-dark border border-gray-300 dark:border-border-dark rounded-md shadow-lg"
+    className="absolute z-20 top-full mt-1 w-full sm:w-80 bg-white dark:bg-card-dark border border-gray-300 dark:border-border-dark rounded-md shadow-lg flex flex-col"
     role="listbox"
   >
+    <div className="p-2 border-b border-gray-200 dark:border-border-dark">
+       <input 
+        type="search"
+        placeholder="Rechercher..."
+        value={searchQuery}
+        onChange={onSearchChange}
+        className="w-full p-2 border border-gray-300 dark:border-border-dark rounded-md bg-gray-50 dark:bg-background-dark focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+      />
+    </div>
     <div className="max-h-80 overflow-y-auto">
       <ul className="divide-y divide-gray-200 dark:divide-border-dark">
-        {chalets.map(chalet => (
+        {filteredChalets.map(chalet => (
           <ChaletListItem 
             key={chalet.id}
             chalet={chalet}
@@ -136,7 +158,6 @@ const DesktopDropdown: React.FC<{
 
 // --- Main Component ---
 
-// FIX: Define the ChaletSelectorProps interface. This was missing, causing a TypeScript error.
 interface ChaletSelectorProps {
   chalets: Chalet[];
   selectedChalets: Chalet[];
@@ -145,15 +166,26 @@ interface ChaletSelectorProps {
 
 const ChaletSelector: React.FC<ChaletSelectorProps> = ({ chalets, selectedChalets, onSelectionChange }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const wrapperRef = useRef<HTMLDivElement>(null);
   const isMobile = useMediaQuery('(max-width: 768px)');
 
   const [tempSelection, setTempSelection] = useState<Chalet[]>(selectedChalets);
 
+  const filteredChalets = useMemo(() => {
+    if (!searchQuery) return chalets;
+    return chalets.filter(chalet => 
+      chalet.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [chalets, searchQuery]);
+
   // Sync temp state to the official selection when the modal opens
   useEffect(() => {
-    if (isOpen && isMobile) {
-      setTempSelection(selectedChalets);
+    if (isOpen) {
+      setSearchQuery(''); // Reset search on open
+      if (isMobile) {
+        setTempSelection(selectedChalets);
+      }
     }
   }, [isOpen, isMobile, selectedChalets]);
 
@@ -220,8 +252,10 @@ const ChaletSelector: React.FC<ChaletSelectorProps> = ({ chalets, selectedChalet
 
       {isOpen && (isMobile ? 
         <MobileModal 
-          chalets={chalets}
+          filteredChalets={filteredChalets}
           tempSelection={tempSelection}
+          searchQuery={searchQuery}
+          onSearchChange={(e) => setSearchQuery(e.target.value)}
           onToggle={handleMobileToggle}
           onClose={() => setIsOpen(false)}
           onReset={handleMobileReset}
@@ -229,8 +263,10 @@ const ChaletSelector: React.FC<ChaletSelectorProps> = ({ chalets, selectedChalet
         /> 
         : 
         <DesktopDropdown 
-          chalets={chalets}
+          filteredChalets={filteredChalets}
           selectedChalets={selectedChalets}
+          searchQuery={searchQuery}
+          onSearchChange={(e) => setSearchQuery(e.target.value)}
           onToggle={handleDesktopToggle}
           onReset={handleDesktopReset}
         />

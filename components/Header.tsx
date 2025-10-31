@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { SyncStatus } from '../lib/types';
 import ThemeToggle from './ThemeToggle';
@@ -6,17 +5,32 @@ import { cn } from '../lib/utils';
 
 interface HeaderProps {
   syncStatus: SyncStatus;
+  lastGeneratedAt: string | null;
 }
 
-const Header: React.FC<HeaderProps> = ({ syncStatus }) => {
-  const statusInfo = {
-    [SyncStatus.IDLE]: { text: 'Initialisation...', color: 'bg-gray-400' },
-    [SyncStatus.SYNCING]: { text: 'Synchronisation...', color: 'bg-yellow-500 animate-pulse' },
-    [SyncStatus.SUCCESS]: { text: 'À jour', color: 'bg-green-500' },
-    [SyncStatus.ERROR]: { text: 'Erreur', color: 'bg-red-500' },
+const Header: React.FC<HeaderProps> = ({ syncStatus, lastGeneratedAt }) => {
+  const getStatusInfo = () => {
+    switch (syncStatus) {
+      case SyncStatus.IDLE:
+        return { text: 'Initialisation...', color: 'bg-gray-400' };
+      case SyncStatus.SYNCING:
+        return { text: 'Synchronisation...', color: 'bg-yellow-500 animate-pulse' };
+      case SyncStatus.SUCCESS:
+        const dateText = lastGeneratedAt
+          ? `À jour (${new Date(lastGeneratedAt).toLocaleString('fr-FR', {
+              hour: '2-digit',
+              minute: '2-digit',
+            })})`
+          : 'À jour';
+        return { text: dateText, color: 'bg-green-500' };
+      case SyncStatus.ERROR:
+        return { text: 'Erreur', color: 'bg-red-500' };
+      default:
+        return { text: '', color: '' };
+    }
   };
 
-  const { text, color } = statusInfo[syncStatus];
+  const { text, color } = getStatusInfo();
 
   return (
     <header className="bg-white dark:bg-card-dark shadow-sm border-b border-gray-200 dark:border-border-dark">
