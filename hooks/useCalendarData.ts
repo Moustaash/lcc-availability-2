@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
-// FIX: Switched to date-fns named imports to resolve module loading errors.
-import { addMonths, parseISO, subDays, subMonths } from 'date-fns';
+// FIX: Import date-fns functions from their specific paths to resolve module loading errors.
+import addMonths from 'date-fns/addMonths';
+import parseISO from 'date-fns/parseISO';
+import subDays from 'date-fns/subDays';
+import subMonths from 'date-fns/subMonths';
 import { Chalet, Booking, SyncStatus, BookingStatus } from '../lib/types';
 import { chaletImages, chaletInfo } from '../lib/chalet-data';
 
@@ -8,7 +11,7 @@ import { chaletImages, chaletInfo } from '../lib/chalet-data';
 interface RawWeek {
   start: string;
   end: string;
-  status: 'booked' | 'option' | 'blocked';
+  status: 'booked' | 'option' | 'blocked' | 'free';
   price_total_eur?: number;
 }
 
@@ -69,21 +72,23 @@ export function useCalendarData() {
         });
 
         const allBookings: Booking[] = data.lots.flatMap(lot => 
-          lot.weeks.map((week, index) => {
-            const status = mapStatus(week.status);
-            // End date in data is the checkout day, so the last day of booking is the day before.
-            const endDate = subDays(parseISO(week.end), 1);
+          lot.weeks
+            .filter(week => week.status !== 'free')
+            .map((week, index) => {
+              const status = mapStatus(week.status as 'booked' | 'option' | 'blocked');
+              // End date in data is the checkout day, so the last day of booking is the day before.
+              const endDate = subDays(parseISO(week.end), 1);
 
-            return {
-              id: `${lot.id}-${week.start}-${index}`,
-              chaletId: lot.id,
-              startDate: parseISO(week.start).toISOString(),
-              endDate: endDate.toISOString(),
-              status: status,
-              name: statusToName(status),
-              price: week.price_total_eur,
-            }
-          })
+              return {
+                id: `${lot.id}-${week.start}-${index}`,
+                chaletId: lot.id,
+                startDate: parseISO(week.start).toISOString(),
+                endDate: endDate.toISOString(),
+                status: status,
+                name: statusToName(status),
+                price: week.price_total_eur,
+              }
+            })
         );
         
         setChalets(allChalets);
