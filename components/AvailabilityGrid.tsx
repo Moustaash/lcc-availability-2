@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Chalet, Booking, BookingStatus } from '../lib/types';
-// FIX: Import date-fns functions from their specific paths to resolve module loading errors.
-import format from 'date-fns/format';
-import endOfMonth from 'date-fns/endOfMonth';
-import startOfMonth from 'date-fns/startOfMonth';
-import eachDayOfInterval from 'date-fns/eachDayOfInterval';
-import isWithinInterval from 'date-fns/isWithinInterval';
-import parseISO from 'date-fns/parseISO';
-import isSameDay from 'date-fns/isSameDay';
+// FIX: Import date-fns functions as named exports from the main 'date-fns' package to resolve call signature errors.
+import {
+  format,
+  endOfMonth,
+  startOfMonth,
+  eachDayOfInterval,
+  isWithinInterval,
+  parseISO,
+  isSameDay,
+} from 'date-fns';
 import fr from 'date-fns/locale/fr';
 import { cn } from '../lib/utils';
+import Tooltip from './Tooltip';
 
 interface AvailabilityGridProps {
   chalets: Chalet[];
@@ -52,6 +55,46 @@ const AvailabilityGrid: React.FC<AvailabilityGridProps> = ({ chalets, bookings, 
   const monthEnd = endOfMonth(currentDate);
   const days = eachDayOfInterval({ start: monthStart, end: monthEnd });
   
+  const [tooltip, setTooltip] = useState<{
+    visible: boolean;
+    content: React.ReactNode;
+    position: { x: number; y: number };
+  }>({
+    visible: false,
+    content: null,
+    position: { x: 0, y: 0 },
+  });
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (tooltip.visible) {
+      setTooltip(prev => ({ ...prev, position: { x: e.clientX, y: e.clientY } }));
+    }
+  };
+
+  const showTooltip = (e: React.MouseEvent, booking: Booking) => {
+    const content = (
+      <div className="flex flex-col gap-1 whitespace-nowrap">
+        <div className="font-bold">{booking.name}</div>
+        <div>
+          <span className="font-semibold">Début:</span> {format(parseISO(booking.startDate), 'd MMMM yyyy', { locale: fr })}
+        </div>
+        <div>
+          <span className="font-semibold">Fin:</span> {format(parseISO(booking.endDate), 'd MMMM yyyy', { locale: fr })}
+        </div>
+      </div>
+    );
+
+    setTooltip({
+      visible: true,
+      content,
+      position: { x: e.clientX, y: e.clientY },
+    });
+  };
+  
+  const hideTooltip = () => {
+    setTooltip(prev => ({ ...prev, visible: false }));
+  };
+
   if (chalets.length === 0) {
     return (
         <div className="text-center py-10 bg-white dark:bg-card-dark rounded-lg shadow">
@@ -61,67 +104,76 @@ const AvailabilityGrid: React.FC<AvailabilityGridProps> = ({ chalets, bookings, 
   }
 
   return (
-    <div className="overflow-hidden bg-white dark:bg-card-dark rounded-lg shadow">
-      <table className="w-full border-collapse table-fixed">
-        <thead>
-          <tr className="border-b border-gray-200 dark:border-border-dark">
-            <th className="sticky left-0 bg-white dark:bg-card-dark p-2 text-left text-sm font-semibold w-40 z-10">Chalet</th>
-            {days.map(day => {
-              const isSelected = selectedDate && isSameDay(day, selectedDate);
-              return (
-                <th key={day.toISOString()} className={cn(
-                  "p-2 text-center text-xs font-normal transition-colors",
-                  isSelected && "bg-primary/10 dark:bg-primary/20"
-                )}>
-                  <div className="flex flex-col items-center">
-                      <span>{format(day, 'E', { locale: fr })}</span>
-                      <span className="text-lg font-semibold">{format(day, 'd')}</span>
-                  </div>
-                </th>
-              );
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          {chalets.map(chalet => {
-            const statusInfo = selectedDate ? getStatusForDay(selectedDate, bookings, chalet.id) : null;
-            return (
-              <tr key={chalet.id} className="border-b border-gray-200 dark:border-border-dark last:border-b-0">
-              <td className="sticky left-0 bg-white dark:bg-card-dark p-2 text-sm w-40 z-10">
-                  <div className="font-semibold">{chalet.name}</div>
-                  {statusInfo && (
-                      <div className={cn("text-xs font-medium", statusInfo.color)}>
-                          {statusInfo.text}
-                      </div>
-                  )}
-              </td>
+    <>
+      <Tooltip
+        visible={tooltip.visible}
+        content={tooltip.content}
+        position={tooltip.position}
+      />
+      <div className="overflow-hidden bg-white dark:bg-card-dark rounded-lg shadow">
+        <table className="w-full border-collapse table-fixed" onMouseMove={handleMouseMove}>
+          <thead>
+            <tr className="border-b border-gray-200 dark:border-border-dark">
+              <th className="sticky left-0 bg-white dark:bg-card-dark p-2 text-left text-sm font-semibold w-40 z-10">Chalet</th>
               {days.map(day => {
-                const booking = getBookingForDay(day, bookings, chalet.id);
-                const isSaturday = format(day, 'E', { locale: fr }) === 'sam.';
                 const isSelected = selectedDate && isSameDay(day, selectedDate);
-
                 return (
-                  <td 
-                    key={day.toISOString()} 
-                    onClick={() => onDateSelect(isSelected ? null : day)}
-                    className={cn(
-                        "h-12 text-center border-l border-gray-200 dark:border-border-dark cursor-pointer transition-colors", 
-                        booking ? statusColors[booking.status] : 'bg-green-100 dark:bg-green-900/20',
-                        !booking && 'hover:bg-green-200 dark:hover:bg-green-900/40',
-                        isSaturday && "border-r-2 border-r-gray-300 dark:border-r-gray-600",
-                        isSelected && "bg-primary/10 dark:bg-primary/20"
-                    )}
-                    title={booking?.name || 'Disponible'}
-                  >
-                  </td>
+                  <th key={day.toISOString()} className={cn(
+                    "p-2 text-center text-xs font-normal transition-colors",
+                    isSelected && "bg-primary/10 dark:bg-primary/20"
+                  )}>
+                    <div className="flex flex-col items-center">
+                        <span>{format(day, 'E', { locale: fr })}</span>
+                        <span className="text-lg font-semibold">{format(day, 'd')}</span>
+                    </div>
+                  </th>
                 );
               })}
             </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {chalets.map(chalet => {
+              const statusInfo = selectedDate ? getStatusForDay(selectedDate, bookings, chalet.id) : null;
+              return (
+                <tr key={chalet.id} className="border-b border-gray-200 dark:border-border-dark last:border-b-0">
+                <td className="sticky left-0 bg-white dark:bg-card-dark p-2 text-sm w-40 z-10">
+                    <div className="font-semibold">{chalet.name}</div>
+                    {statusInfo && (
+                        <div className={cn("text-xs font-medium", statusInfo.color)}>
+                            {statusInfo.text}
+                        </div>
+                    )}
+                </td>
+                {days.map(day => {
+                  const booking = getBookingForDay(day, bookings, chalet.id);
+                  const isSaturday = format(day, 'E', { locale: fr }) === 'sam.';
+                  const isSelected = selectedDate && isSameDay(day, selectedDate);
+
+                  return (
+                    <td 
+                      key={day.toISOString()} 
+                      onClick={() => onDateSelect(isSelected ? null : day)}
+                      onMouseEnter={(e) => booking && showTooltip(e, booking)}
+                      onMouseLeave={hideTooltip}
+                      className={cn(
+                          "h-12 text-center border-l border-gray-200 dark:border-border-dark cursor-pointer transition-colors", 
+                          booking ? statusColors[booking.status] : 'bg-green-100 dark:bg-green-900/20',
+                          !booking && 'hover:bg-green-200 dark:hover:bg-green-900/40',
+                          isSaturday && "border-r-2 border-r-gray-300 dark:border-r-gray-600",
+                          isSelected && "bg-primary/10 dark:bg-primary/20"
+                      )}
+                      title=""
+                    >
+                    </td>
+                  );
+                })}
+              </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 };
 

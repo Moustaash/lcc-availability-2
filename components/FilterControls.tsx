@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-// FIX: Import date-fns functions from their specific paths to resolve module loading errors.
-import format from 'date-fns/format';
+// FIX: Import date-fns functions as named exports from the main 'date-fns' package to resolve call signature errors.
+import { format } from 'date-fns';
 import fr from 'date-fns/locale/fr';
 import { Chalet } from '../lib/types';
 import ChaletSelector from './ChaletSelector';

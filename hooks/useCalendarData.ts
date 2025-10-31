@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
-// FIX: Import date-fns functions from their specific paths to resolve module loading errors.
-import addMonths from 'date-fns/addMonths';
-import parseISO from 'date-fns/parseISO';
-import subDays from 'date-fns/subDays';
-import subMonths from 'date-fns/subMonths';
+// FIX: Import date-fns functions as named exports from the main 'date-fns' package to resolve call signature errors.
+import { addMonths, parseISO, subDays, subMonths } from 'date-fns';
 import { Chalet, Booking, SyncStatus, BookingStatus } from '../lib/types';
 import { chaletImages, chaletInfo } from '../lib/chalet-data';
 

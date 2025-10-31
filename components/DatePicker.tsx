@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
-// FIX: Import date-fns functions from their specific paths to resolve module loading errors.
-import format from 'date-fns/format';
-import getYear from 'date-fns/getYear';
-import setMonth from 'date-fns/setMonth';
-import setYear from 'date-fns/setYear';
+// FIX: Import date-fns functions as named exports from the main 'date-fns' package to resolve call signature errors.
+import { format, getYear, setMonth, setYear } from 'date-fns';
 import fr from 'date-fns/locale/fr';
 import { cn } from '../lib/utils';
 

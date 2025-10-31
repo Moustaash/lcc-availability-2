@@ -1,17 +1,19 @@
 import React from 'react';
 import { Chalet, Booking, BookingStatus } from '../lib/types';
-// FIX: Import date-fns functions from their specific paths to resolve module loading errors.
-import format from 'date-fns/format';
-import endOfMonth from 'date-fns/endOfMonth';
-import startOfMonth from 'date-fns/startOfMonth';
-import eachDayOfInterval from 'date-fns/eachDayOfInterval';
-import isWithinInterval from 'date-fns/isWithinInterval';
-import parseISO from 'date-fns/parseISO';
-import startOfWeek from 'date-fns/startOfWeek';
-import endOfWeek from 'date-fns/endOfWeek';
-import isSameMonth from 'date-fns/isSameMonth';
-import isToday from 'date-fns/isToday';
-import isSameDay from 'date-fns/isSameDay';
+// FIX: Import date-fns functions as named exports from the main 'date-fns' package to resolve call signature errors.
+import {
+  format,
+  endOfMonth,
+  startOfMonth,
+  eachDayOfInterval,
+  isWithinInterval,
+  parseISO,
+  startOfWeek,
+  endOfWeek,
+  isSameMonth,
+  isToday,
+  isSameDay,
+} from 'date-fns';
 import fr from 'date-fns/locale/fr';
 import { cn } from '../lib/utils';
 
