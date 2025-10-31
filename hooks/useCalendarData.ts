@@ -1,8 +1,10 @@
-
-
 import { useState, useEffect } from 'react';
-// FIX: Corrected date-fns imports to use named imports from the main package to resolve module resolution errors.
-import { addMonths, parseISO, subDays, subMonths } from 'date-fns';
+// FIX: Changed date-fns imports to use direct paths for each function to resolve module resolution errors.
+import addMonths from 'date-fns/addMonths';
+import isSameDay from 'date-fns/isSameDay';
+import parseISO from 'date-fns/parseISO';
+import subDays from 'date-fns/subDays';
+import subMonths from 'date-fns/subMonths';
 import { Chalet, Booking, SyncStatus, BookingStatus } from '../lib/types';
 import { chaletImages, chaletInfo } from '../lib/chalet-data';
 
@@ -55,24 +57,19 @@ export function useCalendarData() {
     const fetchData = async () => {
       setSyncStatus(SyncStatus.SYNCING);
       try {
-        const response = await fetch('/data/site/availability/data.json'); // Path for production server
+        const response = await fetch('/data.json'); // Use root path for local dev and production server
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         
-        const jsonData: RawData[] = await response.json();
+        const data: RawData = await response.json();
         
-        // ======================================================
-        // CORRECTION : VÉRIFIER SI LES DONNÉES SONT VIDES
-        // ======================================================
-        if (!jsonData || jsonData.length === 0) {
+        if (!data || !data.lots) {
           console.warn("Le fichier data.json est vide ou mal formaté.");
-          setSyncStatus(SyncStatus.ERROR); // Ou SUCCESS si un état vide est acceptable
+          setSyncStatus(SyncStatus.ERROR);
           return; 
         }
-        // ======================================================
 
-        const data = jsonData[0];
         setLastGeneratedAt(data.generated_at);
 
         const allChalets: Chalet[] = data.lots.map(lot => {
@@ -90,17 +87,32 @@ export function useCalendarData() {
           lot.weeks
             .map((week, index) => {
               const status = mapStatus(week.status);
-              // End date in data is the checkout day, so the last day of booking is the day before.
-              const endDate = subDays(parseISO(week.end), 1);
+              const parsedStart = parseISO(week.start);
+              const parsedEnd = parseISO(week.end);
+              
+              let effectiveEndDate;
+              // This logic correctly handles the data specification where 'end' dates for
+              // 'booked' and 'free' statuses are exclusive (checkout day), while for
+              // 'option' and 'blocked' they are inclusive (last day of stay) as-is from the source.
+              if (week.status === 'option' || week.status === 'blocked') {
+                effectiveEndDate = parsedEnd;
+              } else { 
+                // 'booked' and 'free' end dates are exclusive (checkout day).
+                // Handle single-day bookings where checkout is same as check-in.
+                if (isSameDay(parsedStart, parsedEnd)) {
+                  effectiveEndDate = parsedStart;
+                } else {
+                  effectiveEndDate = subDays(parsedEnd, 1);
+                }
+              }
 
               return {
                 id: `${lot.id}-${week.start}-${index}`,
                 chaletId: lot.id,
-                startDate: parseISO(week.start).toISOString(),
-                endDate: endDate.toISOString(),
+                startDate: parsedStart.toISOString(),
+                endDate: effectiveEndDate.toISOString(),
                 status: status,
                 name: statusToName(status),
-                // Correctly map the price for all statuses, including 'free', if it exists.
                 price: week.price_total_eur,
               }
             })
@@ -110,7 +122,6 @@ export function useCalendarData() {
         setBookings(allBookings);
         setSyncStatus(SyncStatus.SUCCESS);
       } catch (error) {
-        // Cette erreur se déclenche si le JSON est invalide (ex: texte vide)
         console.error("Failed to fetch calendar data:", error);
         setSyncStatus(SyncStatus.ERROR);
       }

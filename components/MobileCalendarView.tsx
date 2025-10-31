@@ -1,20 +1,18 @@
 import React from 'react';
 import { Chalet, Booking, BookingStatus } from '../lib/types';
-// FIX: Corrected date-fns imports to use named imports from the main package to resolve module resolution errors.
-import {
-  format,
-  endOfMonth,
-  startOfMonth,
-  eachDayOfInterval,
-  isWithinInterval,
-  parseISO,
-  startOfWeek,
-  endOfWeek,
-  isSameMonth,
-  isToday,
-  isSameDay,
-} from 'date-fns';
-import { fr } from 'date-fns/locale';
+// FIX: Changed date-fns imports to use direct paths for functions and locales to resolve module resolution errors.
+import eachDayOfInterval from 'date-fns/eachDayOfInterval';
+import endOfMonth from 'date-fns/endOfMonth';
+import endOfWeek from 'date-fns/endOfWeek';
+import format from 'date-fns/format';
+import isSameDay from 'date-fns/isSameDay';
+import isSameMonth from 'date-fns/isSameMonth';
+import isToday from 'date-fns/isToday';
+import isWithinInterval from 'date-fns/isWithinInterval';
+import parseISO from 'date-fns/parseISO';
+import startOfMonth from 'date-fns/startOfMonth';
+import startOfWeek from 'date-fns/startOfWeek';
+import fr from 'date-fns/locale/fr';
 import { cn } from '../lib/utils';
 
 interface MobileCalendarViewProps {
@@ -26,7 +24,7 @@ interface MobileCalendarViewProps {
 }
 
 const getBookingForDay = (day: Date, bookings: Booking[], chaletId: string): Booking | undefined => {
-  // 1. Récupérer TOUTES les réservations pour ce jour
+  // 1. Get ALL bookings for this day
   const dayBookings = bookings.filter(booking => 
     booking.chaletId === chaletId &&
     isWithinInterval(day, { start: parseISO(booking.startDate), end: parseISO(booking.endDate) })
@@ -35,19 +33,20 @@ const getBookingForDay = (day: Date, bookings: Booking[], chaletId: string): Boo
   if (dayBookings.length === 0) return undefined;
   if (dayBookings.length === 1) return dayBookings[0];
 
-  // 2. Appliquer la nouvelle priorité (Option > Bloqué > Libre > Confirmé)
-  if (dayBookings.some(b => b.status === BookingStatus.OPTION)) {
-    return dayBookings.find(b => b.status === BookingStatus.OPTION);
-  }
+  // 2. Per the data specification, status priority for overlapping bookings is:
+  //    BLOCKED > OPTION > CONFIRMED > FREE.
   if (dayBookings.some(b => b.status === BookingStatus.BLOCKED)) {
     return dayBookings.find(b => b.status === BookingStatus.BLOCKED);
   }
-  if (dayBookings.some(b => b.status === BookingStatus.FREE)) {
-    return dayBookings.find(b => b.status === BookingStatus.FREE);
+  if (dayBookings.some(b => b.status === BookingStatus.OPTION)) {
+    return dayBookings.find(b => b.status === BookingStatus.OPTION);
+  }
+  if (dayBookings.some(b => b.status === BookingStatus.CONFIRMED)) {
+    return dayBookings.find(b => b.status === BookingStatus.CONFIRMED);
   }
   
-  // 3. Retourner 'Confirmé' (Réservé) en dernier recours
-  return dayBookings.find(b => b.status === BookingStatus.CONFIRMED);
+  // 3. Return 'Free' as the last resort
+  return dayBookings.find(b => b.status === BookingStatus.FREE);
 };
 
 const statusColors: Record<BookingStatus, string> = {
