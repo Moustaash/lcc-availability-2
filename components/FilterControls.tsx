@@ -1,5 +1,7 @@
+
+
 import React, { useState, useRef, useEffect } from 'react';
-// FIX: Consolidate date-fns imports to resolve module resolution errors.
+// FIX: Corrected date-fns imports to use named imports from the main package to resolve module resolution errors.
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { Chalet } from '../lib/types';

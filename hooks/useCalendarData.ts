@@ -1,5 +1,7 @@
+
+
 import { useState, useEffect } from 'react';
-// FIX: Consolidate date-fns imports to resolve module resolution errors.
+// FIX: Corrected date-fns imports to use named imports from the main package to resolve module resolution errors.
 import { addMonths, parseISO, subDays, subMonths } from 'date-fns';
 import { Chalet, Booking, SyncStatus, BookingStatus } from '../lib/types';
 import { chaletImages, chaletInfo } from '../lib/chalet-data';
@@ -98,6 +100,7 @@ export function useCalendarData() {
                 endDate: endDate.toISOString(),
                 status: status,
                 name: statusToName(status),
+                // Correctly map the price for all statuses, including 'free', if it exists.
                 price: week.price_total_eur,
               }
             })

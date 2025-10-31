@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Chalet, Booking, BookingStatus } from '../lib/types';
-// FIX: Consolidate date-fns imports to resolve module resolution errors.
+// FIX: Corrected date-fns imports to use named imports from the main package to resolve module resolution errors.
 import {
   format,
   endOfMonth,
@@ -23,10 +23,28 @@ interface AvailabilityGridProps {
 }
 
 const getBookingForDay = (day: Date, bookings: Booking[], chaletId: string): Booking | undefined => {
-  return bookings.find(booking => 
+  // 1. Récupérer TOUTES les réservations pour ce jour
+  const dayBookings = bookings.filter(booking => 
     booking.chaletId === chaletId &&
     isWithinInterval(day, { start: parseISO(booking.startDate), end: parseISO(booking.endDate) })
   );
+
+  if (dayBookings.length === 0) return undefined;
+  if (dayBookings.length === 1) return dayBookings[0];
+
+  // 2. Appliquer la nouvelle priorité (Option > Bloqué > Libre > Confirmé)
+  if (dayBookings.some(b => b.status === BookingStatus.OPTION)) {
+    return dayBookings.find(b => b.status === BookingStatus.OPTION);
+  }
+  if (dayBookings.some(b => b.status === BookingStatus.BLOCKED)) {
+    return dayBookings.find(b => b.status === BookingStatus.BLOCKED);
+  }
+  if (dayBookings.some(b => b.status === BookingStatus.FREE)) {
+    return dayBookings.find(b => b.status === BookingStatus.FREE);
+  }
+  
+  // 3. Retourner 'Confirmé' (Réservé) en dernier recours
+  return dayBookings.find(b => b.status === BookingStatus.CONFIRMED);
 };
 
 const getStatusForDay = (day: Date, bookings: Booking[], chaletId: string): { text: string; color: string; price?: number } | null => {
