@@ -61,7 +61,7 @@ const statusColors: Record<BookingStatus, string> = {
   [BookingStatus.CONFIRMED]: 'bg-status-confirmed',
   [BookingStatus.OPTION]: 'bg-status-option',
   [BookingStatus.BLOCKED]: 'bg-status-blocked',
-  [BookingStatus.FREE]: 'bg-gray-50 dark:bg-gray-800/50', // Fallback, will be replaced by heatmap
+  [BookingStatus.FREE]: 'bg-background',
 };
 
 const statusHexColors: Record<string, string> = {
@@ -71,14 +71,10 @@ const statusHexColors: Record<string, string> = {
 };
 
 const getPriceHeatmapClass = (price: number | undefined): string => {
-  // If price is not a number, it's "Available" (without a price).
-  // Use the base color from the legend (lightest green).
-  if (typeof price !== 'number') return 'bg-green-100 dark:bg-green-900'; 
-  
-  // The rest of the heatmap logic
-  if (price < 5000) return 'bg-green-300 dark:bg-green-700';
-  if (price < 10000) return 'bg-green-200 dark:bg-green-800';
-  return 'bg-green-100 dark:bg-green-900';
+  if (typeof price !== 'number') return 'bg-green-100 dark:bg-green-900/50'; 
+  if (price < 5000) return 'bg-green-300 dark:bg-green-700/50';
+  if (price < 10000) return 'bg-green-200 dark:bg-green-800/50';
+  return 'bg-green-100 dark:bg-green-900/50';
 };
 
 const getTransitionStyle = (booking: Booking, day: Date): React.CSSProperties => {
@@ -156,7 +152,7 @@ const AvailabilityGrid: React.FC<AvailabilityGridProps> = ({ chalets, bookings, 
 
   if (chalets.length === 0) {
     return (
-        <div className="text-center py-10 bg-white dark:bg-card-dark rounded-lg shadow">
+        <div className="text-center py-10 bg-card rounded-lg border">
             <p>Sélectionnez un ou plusieurs chalets pour afficher les disponibilités.</p>
         </div>
     );
@@ -169,39 +165,39 @@ const AvailabilityGrid: React.FC<AvailabilityGridProps> = ({ chalets, bookings, 
         content={tooltip.content}
         position={tooltip.position}
       />
-      <div className="overflow-hidden bg-white dark:bg-card-dark rounded-lg shadow">
+      <div className="rounded-lg border overflow-hidden">
         <table className="w-full border-collapse table-fixed" onMouseMove={handleMouseMove}>
-          <thead>
-            <tr className="border-b border-gray-200 dark:border-border-dark">
-              <th className="sticky left-0 bg-white dark:bg-card-dark p-2 text-left text-sm font-semibold w-40 z-10">Chalet</th>
+          <thead className="[&_tr]:border-b">
+            <tr className="border-b transition-colors hover:bg-muted/50">
+              <th className="sticky left-0 bg-card p-2 text-left text-sm font-semibold w-40 z-10">Chalet</th>
               {days.map(day => {
                 const isSelected = selectedDate && isSameDay(day, selectedDate);
                 return (
                   <th key={day.toISOString()} className={cn(
-                    "p-2 text-center text-xs font-normal transition-colors",
-                    isSelected && "bg-primary/10 dark:bg-primary/20"
+                    "p-2 text-center text-xs font-normal transition-colors text-muted-foreground",
+                    isSelected && "bg-accent"
                   )}>
                     <div className="flex flex-col items-center">
                         <span>{format(day, 'E', { locale: fr })}</span>
-                        <span className="text-lg font-semibold">{format(day, 'd')}</span>
+                        <span className="text-lg font-semibold text-foreground">{format(day, 'd')}</span>
                     </div>
                   </th>
                 );
               })}
             </tr>
           </thead>
-          <tbody>
+          <tbody className="[&_tr:last-child]:border-0">
             {chalets.map(chalet => {
               const statusInfo = selectedDate ? getStatusForDay(selectedDate, bookings, chalet.id) : null;
               return (
-                <tr key={chalet.id} className="border-b border-gray-200 dark:border-border-dark last:border-b-0">
-                <td className="sticky left-0 bg-white dark:bg-card-dark p-2 text-sm w-40 z-10">
+                <tr key={chalet.id} className="border-b transition-colors hover:bg-muted/50">
+                <td className="sticky left-0 bg-card p-2 text-sm w-40 z-10 align-top">
                     <div className="font-semibold">{chalet.name}</div>
                     {statusInfo && (
                       <div className={cn("text-xs font-medium", statusInfo.color)}>
                         {statusInfo.text}
                         {statusInfo.price && (
-                          <span className="ml-1 font-normal text-gray-600 dark:text-gray-400">
+                          <span className="ml-1 font-normal text-muted-foreground">
                             ({new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 }).format(statusInfo.price)})
                           </span>
                         )}
@@ -217,7 +213,7 @@ const AvailabilityGrid: React.FC<AvailabilityGridProps> = ({ chalets, bookings, 
                     ? booking.status === BookingStatus.FREE
                       ? getPriceHeatmapClass(booking.price)
                       : statusColors[booking.status]
-                    : 'bg-gray-50 dark:bg-gray-800/50';
+                    : 'bg-muted/50';
 
                   const transitionStyle = booking ? getTransitionStyle(booking, day) : {};
 
@@ -228,11 +224,11 @@ const AvailabilityGrid: React.FC<AvailabilityGridProps> = ({ chalets, bookings, 
                       onMouseEnter={(e) => booking && showTooltip(e, booking)}
                       onMouseLeave={hideTooltip}
                       className={cn(
-                          "h-12 text-center border-l border-gray-200 dark:border-border-dark cursor-pointer transition-colors relative", 
+                          "h-12 text-center border-l cursor-pointer transition-colors relative", 
                           cellBgClass,
                           booking?.status === BookingStatus.FREE && 'hover:brightness-90',
-                          isSaturday && "border-r-2 border-r-gray-300 dark:border-r-gray-600",
-                          isSelected && "bg-primary/10 dark:bg-primary/20"
+                          isSaturday && "border-r-2 border-r-border/80",
+                          isSelected && "bg-accent ring-2 ring-primary z-[5]"
                       )}
                       style={transitionStyle}
                       title=""

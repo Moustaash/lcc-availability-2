@@ -45,9 +45,9 @@ function App() {
   const chaletsToDisplay = selectedChalets.length > 0 ? selectedChalets : chalets;
 
   return (
-    <div className="bg-gray-50 dark:bg-background-dark min-h-screen font-sans">
+    <div className="bg-background text-foreground min-h-screen font-sans">
       <Header syncStatus={syncStatus} lastGeneratedAt={lastGeneratedAt} />
-      <main className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+      <main className="container mx-auto p-4 sm:p-6 lg:p-8">
         <FilterControls
           currentDate={currentDate}
           onPrevMonth={handlePrevMonthWithReset}

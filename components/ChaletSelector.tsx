@@ -16,29 +16,28 @@ const ChaletListItem: React.FC<{
 }> = React.memo(({ chalet, isSelected, onToggle }) => (
   <li 
     onClick={() => onToggle(chalet)}
-    className="p-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer flex items-center gap-4"
+    className="p-3 hover:bg-accent cursor-pointer flex items-center gap-4"
     role="option"
     aria-selected={isSelected}
   >
     <img 
       src={chalet.imageUrl} 
       alt={chalet.name} 
-      className="w-16 h-12 object-cover rounded-md flex-shrink-0 bg-gray-200 dark:bg-gray-700" 
+      className="w-16 h-12 object-cover rounded-md flex-shrink-0 bg-muted" 
       loading="lazy"
     />
     <span className="flex-grow font-medium">{chalet.name}</span>
     <div className={cn(
-        "w-6 h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-colors",
-        isSelected ? 'bg-primary border-primary' : 'border-gray-300 dark:border-gray-500'
+        "w-5 h-5 rounded-sm border-2 flex-shrink-0 flex items-center justify-center transition-colors",
+        isSelected ? 'bg-primary border-primary text-primary-foreground' : 'border-muted-foreground'
     )}>
-      {isSelected && <span className="material-symbols-outlined text-white text-base font-bold">check</span>}
+      {isSelected && <span className="material-symbols-outlined text-base font-bold">check</span>}
     </div>
   </li>
 ));
 
 /**
  * The mobile bottom-sheet modal.
- * By defining it outside the parent, it won't be re-created on re-renders, preventing animation restarts.
  */
 const MobileModal: React.FC<{
   filteredChalets: Chalet[];
@@ -56,26 +55,26 @@ const MobileModal: React.FC<{
       onClick={onClose}
     >
         <div 
-          className="bg-white dark:bg-card-dark rounded-t-2xl flex flex-col h-[90vh] max-h-[700px] animate-slide-up"
+          className="bg-card rounded-t-2xl flex flex-col h-[90vh] max-h-[700px] animate-slide-up"
           onClick={(e) => e.stopPropagation()}
         >
-            <header className="p-4 border-b border-gray-200 dark:border-border-dark flex justify-between items-center flex-shrink-0">
+            <header className="p-4 border-b flex justify-between items-center flex-shrink-0">
                 <h2 className="text-lg font-bold">Sélectionner les chalets</h2>
-                <button onClick={onClose} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+                <button onClick={onClose} className="p-2 rounded-full hover:bg-accent">
                     <span className="material-symbols-outlined">close</span>
                 </button>
             </header>
-            <div className="p-3 border-b border-gray-200 dark:border-border-dark flex-shrink-0">
+            <div className="p-3 border-b flex-shrink-0">
               <input 
                 type="search"
                 placeholder="Rechercher un chalet..."
                 value={searchQuery}
                 onChange={onSearchChange}
-                className="w-full p-2 border border-gray-300 dark:border-border-dark rounded-md bg-gray-50 dark:bg-background-dark focus:outline-none focus:ring-2 focus:ring-primary"
+                className="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               />
             </div>
             <div className="flex-grow overflow-y-auto">
-              <ul className="divide-y divide-gray-200 dark:divide-border-dark">
+              <ul className="divide-y">
                 {filteredChalets.map(chalet => (
                   <ChaletListItem 
                     key={chalet.id}
@@ -86,13 +85,13 @@ const MobileModal: React.FC<{
                 ))}
               </ul>
             </div>
-            <footer className="p-4 border-t border-gray-200 dark:border-border-dark flex items-center gap-4 flex-shrink-0">
+            <footer className="p-4 border-t flex items-center gap-4 flex-shrink-0">
                 <button onClick={onReset} className="text-sm font-semibold text-primary hover:underline px-4">
                     Réinitialiser
                 </button>
                 <button 
                   onClick={onApply} 
-                  className="flex-grow bg-primary text-white font-bold py-3 px-4 rounded-lg hover:bg-opacity-90 transition-colors"
+                  className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8 flex-grow"
                 >
                     Valider
                 </button>
@@ -121,20 +120,20 @@ const DesktopDropdown: React.FC<{
   onReset: () => void;
 }> = ({ filteredChalets, selectedChalets, searchQuery, onSearchChange, onToggle, onReset }) => (
   <div 
-    className="absolute z-20 top-full mt-1 w-full sm:w-80 bg-white dark:bg-card-dark border border-gray-300 dark:border-border-dark rounded-md shadow-lg flex flex-col"
+    className="absolute z-20 top-full mt-1 w-full sm:w-80 bg-popover text-popover-foreground border rounded-md shadow-md flex flex-col"
     role="listbox"
   >
-    <div className="p-2 border-b border-gray-200 dark:border-border-dark">
+    <div className="p-2 border-b">
        <input 
         type="search"
         placeholder="Rechercher..."
         value={searchQuery}
         onChange={onSearchChange}
-        className="w-full p-2 border border-gray-300 dark:border-border-dark rounded-md bg-gray-50 dark:bg-background-dark focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+        className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       />
     </div>
     <div className="max-h-80 overflow-y-auto">
-      <ul className="divide-y divide-gray-200 dark:divide-border-dark">
+      <ul className="divide-y">
         {filteredChalets.map(chalet => (
           <ChaletListItem 
             key={chalet.id}
@@ -146,7 +145,7 @@ const DesktopDropdown: React.FC<{
       </ul>
     </div>
     {selectedChalets.length > 0 && (
-      <div className="p-2 border-t border-gray-200 dark:border-border-dark">
+      <div className="p-2 border-t">
         <button onClick={onReset} className="text-sm text-primary hover:underline w-full text-left p-1">
           Réinitialiser
         </button>
@@ -242,12 +241,12 @@ const ChaletSelector: React.FC<ChaletSelectorProps> = ({ chalets, selectedChalet
     <div className="relative" ref={wrapperRef}>
       <button 
         onClick={() => setIsOpen(!isOpen)} 
-        className="w-full sm:w-64 flex justify-between items-center p-2 border border-gray-300 dark:border-border-dark rounded-md bg-white dark:bg-background-dark text-left"
+        className="inline-flex items-center justify-between whitespace-nowrap rounded-md text-sm font-medium border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 w-full sm:w-64 text-left"
         aria-haspopup="listbox"
         aria-expanded={isOpen}
       >
         <span className="truncate">{selectionText}</span>
-        <span className={cn("material-symbols-outlined transition-transform", isOpen && "rotate-180")}>expand_more</span>
+        <span className={cn("material-symbols-outlined transition-transform text-muted-foreground", isOpen && "rotate-180")}>expand_more</span>
       </button>
 
       {isOpen && (isMobile ? 

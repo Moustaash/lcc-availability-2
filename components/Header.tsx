@@ -33,15 +33,15 @@ const Header: React.FC<HeaderProps> = ({ syncStatus, lastGeneratedAt }) => {
   const { text, color } = getStatusInfo();
 
   return (
-    <header className="bg-white dark:bg-card-dark shadow-sm border-b border-gray-200 dark:border-border-dark">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+    <header className="bg-card border-b">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
         <div className="flex items-center gap-3">
-            <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+            <h1 className="text-xl sm:text-2xl font-bold text-foreground">
             Disponibilité des Chalets
             </h1>
             <div className="flex items-center gap-2 text-xs sm:text-sm">
                 <span className={cn("h-2 w-2 rounded-full", color)}></span>
-                <span className="text-gray-500 dark:text-gray-400">{text}</span>
+                <span className="text-muted-foreground">{text}</span>
             </div>
         </div>
         <ThemeToggle />

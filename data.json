@@ -1,8 +1,2548 @@
 [
   {
-    "version": "0.0.0-sample",
-    "generated_at": "2025-01-01T00:00:00.000Z",
-    "season": "sample",
-    "lots": []
+    "version": "2.2.0",
+    "generated_at": "2025-11-18T08:30:02.621Z",
+    "timezone_render_for_booked_and_free": "Europe/Paris",
+    "lots_count": 19,
+    "weeks_count": 409,
+    "stats": {
+      "blocked": 8,
+      "option": 12,
+      "booked": 161,
+      "free": 228
+    },
+    "lots": [
+      {
+        "id": "OURSON",
+        "label": "OURSON",
+        "weeks": [
+          {
+            "start": "2025-11-29",
+            "end": "2025-12-06",
+            "status": "free",
+            "price_total_eur": 3402
+          },
+          {
+            "start": "2025-12-06",
+            "end": "2025-12-13",
+            "status": "free",
+            "price_total_eur": 3402
+          },
+          {
+            "start": "2025-12-13",
+            "end": "2025-12-13",
+            "status": "booked",
+            "price_total_eur": 3572
+          },
+          {
+            "start": "2025-12-13",
+            "end": "2025-12-20",
+            "status": "option"
+          },
+          {
+            "start": "2025-12-20",
+            "end": "2025-12-27",
+            "status": "booked",
+            "price_total_eur": 5935
+          },
+          {
+            "start": "2025-12-27",
+            "end": "2026-01-03",
+            "status": "booked",
+            "price_total_eur": 6880
+          },
+          {
+            "start": "2026-01-03",
+            "end": "2026-02-14",
+            "status": "booked",
+            "price_total_eur": 3910
+          },
+          {
+            "start": "2026-02-14",
+            "end": "2026-02-21",
+            "status": "booked",
+            "price_total_eur": 7205
+          },
+          {
+            "start": "2026-02-21",
+            "end": "2026-03-07",
+            "status": "booked",
+            "price_total_eur": 5180
+          },
+          {
+            "start": "2026-03-07",
+            "end": "2026-03-14",
+            "status": "free",
+            "price_total_eur": 4740
+          },
+          {
+            "start": "2026-03-14",
+            "end": "2026-03-21",
+            "status": "booked",
+            "price_total_eur": 4740
+          },
+          {
+            "start": "2026-03-21",
+            "end": "2026-03-28",
+            "status": "free",
+            "price_total_eur": 4740
+          },
+          {
+            "start": "2026-03-28",
+            "end": "2026-04-04",
+            "status": "free",
+            "price_total_eur": 4740
+          },
+          {
+            "start": "2026-04-04",
+            "end": "2026-04-11",
+            "status": "booked",
+            "price_total_eur": 4740
+          },
+          {
+            "start": "2026-04-11",
+            "end": "2026-04-18",
+            "status": "free",
+            "price_total_eur": 4740
+          },
+          {
+            "start": "2026-04-18",
+            "end": "2026-04-25",
+            "status": "free",
+            "price_total_eur": 4740
+          },
+          {
+            "start": "2026-04-25",
+            "end": "2026-05-02",
+            "status": "free",
+            "price_total_eur": 4740
+          },
+          {
+            "start": "2026-05-02",
+            "end": "2026-05-03",
+            "status": "free",
+            "price_total_eur": 4740
+          }
+        ]
+      },
+      {
+        "id": "LIEVRE-BLANC",
+        "label": "LIEVRE-BLANC",
+        "weeks": [
+          {
+            "start": "2025-11-29",
+            "end": "2025-12-06",
+            "status": "booked",
+            "price_total_eur": 7000
+          },
+          {
+            "start": "2025-12-06",
+            "end": "2025-12-13",
+            "status": "free",
+            "price_total_eur": 10000
+          },
+          {
+            "start": "2025-12-13",
+            "end": "2025-12-20",
+            "status": "booked",
+            "price_total_eur": 11000
+          },
+          {
+            "start": "2025-12-20",
+            "end": "2025-12-27",
+            "status": "booked",
+            "price_total_eur": 19640
+          },
+          {
+            "start": "2025-12-27",
+            "end": "2026-01-03",
+            "status": "booked",
+            "price_total_eur": 35800
+          },
+          {
+            "start": "2026-01-03",
+            "end": "2026-01-10",
+            "status": "booked",
+            "price_total_eur": 17325
+          },
+          {
+            "start": "2026-01-10",
+            "end": "2026-02-07",
+            "status": "booked",
+            "price_total_eur": 10130
+          },
+          {
+            "start": "2026-02-07",
+            "end": "2026-02-14",
+            "status": "booked",
+            "price_total_eur": 10630
+          },
+          {
+            "start": "2026-02-14",
+            "end": "2026-02-21",
+            "status": "free",
+            "price_total_eur": 32550
+          },
+          {
+            "start": "2026-02-21",
+            "end": "2026-03-07",
+            "status": "booked",
+            "price_total_eur": 17850
+          },
+          {
+            "start": "2026-03-07",
+            "end": "2026-03-14",
+            "status": "free",
+            "price_total_eur": 15000
+          },
+          {
+            "start": "2026-03-14",
+            "end": "2026-03-21",
+            "status": "booked",
+            "price_total_eur": 13560
+          },
+          {
+            "start": "2026-03-21",
+            "end": "2026-03-28",
+            "status": "free",
+            "price_total_eur": 13560
+          },
+          {
+            "start": "2026-03-28",
+            "end": "2026-04-04",
+            "status": "booked",
+            "price_total_eur": 15000
+          },
+          {
+            "start": "2026-04-04",
+            "end": "2026-04-11",
+            "status": "free",
+            "price_total_eur": 13560
+          },
+          {
+            "start": "2026-04-11",
+            "end": "2026-04-18",
+            "status": "free",
+            "price_total_eur": 13560
+          },
+          {
+            "start": "2026-04-18",
+            "end": "2026-04-25",
+            "status": "free",
+            "price_total_eur": 13560
+          },
+          {
+            "start": "2026-04-25",
+            "end": "2026-05-02",
+            "status": "free",
+            "price_total_eur": 13560
+          },
+          {
+            "start": "2026-05-02",
+            "end": "2026-05-03",
+            "status": "free",
+            "price_total_eur": 13560
+          }
+        ]
+      },
+      {
+        "id": "ALICE",
+        "label": "ALICE",
+        "weeks": [
+          {
+            "start": "2025-11-29",
+            "end": "2025-12-06",
+            "status": "booked",
+            "price_total_eur": 8800
+          },
+          {
+            "start": "2025-12-06",
+            "end": "2025-12-13",
+            "status": "booked",
+            "price_total_eur": 11000
+          },
+          {
+            "start": "2025-12-13",
+            "end": "2025-12-20",
+            "status": "booked",
+            "price_total_eur": 12125
+          },
+          {
+            "start": "2025-12-20",
+            "end": "2025-12-20",
+            "status": "booked",
+            "price_total_eur": 35280
+          },
+          {
+            "start": "2025-12-20",
+            "end": "2025-12-27",
+            "status": "option"
+          },
+          {
+            "start": "2025-12-27",
+            "end": "2026-01-03",
+            "status": "booked",
+            "price_total_eur": 48510
+          },
+          {
+            "start": "2026-01-03",
+            "end": "2026-01-10",
+            "status": "booked",
+            "price_total_eur": 23000
+          },
+          {
+            "start": "2026-01-10",
+            "end": "2026-01-17",
+            "status": "free",
+            "price_total_eur": 12700
+          },
+          {
+            "start": "2026-01-17",
+            "end": "2026-02-14",
+            "status": "booked",
+            "price_total_eur": 12700
+          },
+          {
+            "start": "2026-02-14",
+            "end": "2026-02-21",
+            "status": "booked",
+            "price_total_eur": 42000
+          },
+          {
+            "start": "2026-02-21",
+            "end": "2026-02-28",
+            "status": "free",
+            "price_total_eur": 28000
+          },
+          {
+            "start": "2026-02-28",
+            "end": "2026-03-07",
+            "status": "free",
+            "price_total_eur": 28000
+          },
+          {
+            "start": "2026-03-07",
+            "end": "2026-03-14",
+            "status": "free",
+            "price_total_eur": 28000
+          },
+          {
+            "start": "2026-03-14",
+            "end": "2026-03-21",
+            "status": "free",
+            "price_total_eur": 28000
+          },
+          {
+            "start": "2026-03-21",
+            "end": "2026-03-28",
+            "status": "free",
+            "price_total_eur": 28000
+          },
+          {
+            "start": "2026-03-28",
+            "end": "2026-04-04",
+            "status": "free",
+            "price_total_eur": 28000
+          },
+          {
+            "start": "2026-04-04",
+            "end": "2026-04-11",
+            "status": "free",
+            "price_total_eur": 28000
+          },
+          {
+            "start": "2026-04-11",
+            "end": "2026-04-18",
+            "status": "free",
+            "price_total_eur": 28000
+          },
+          {
+            "start": "2026-04-18",
+            "end": "2026-04-25",
+            "status": "free",
+            "price_total_eur": 28000
+          },
+          {
+            "start": "2026-04-25",
+            "end": "2026-05-02",
+            "status": "free",
+            "price_total_eur": 28000
+          },
+          {
+            "start": "2026-05-02",
+            "end": "2026-05-03",
+            "status": "free",
+            "price_total_eur": 28000
+          }
+        ]
+      },
+      {
+        "id": "ANEMONES",
+        "label": "ANEMONES",
+        "weeks": [
+          {
+            "start": "2025-11-29",
+            "end": "2025-12-06",
+            "status": "booked",
+            "price_total_eur": 7187
+          },
+          {
+            "start": "2025-12-06",
+            "end": "2025-12-20",
+            "status": "booked",
+            "price_total_eur": 7996
+          },
+          {
+            "start": "2025-12-20",
+            "end": "2025-12-27",
+            "status": "blocked"
+          },
+          {
+            "start": "2025-12-20",
+            "end": "2025-12-20",
+            "status": "booked",
+            "price_total_eur": 19556
+          },
+          {
+            "start": "2025-12-27",
+            "end": "2026-01-03",
+            "status": "booked",
+            "price_total_eur": 20932
+          },
+          {
+            "start": "2026-01-03",
+            "end": "2026-01-10",
+            "status": "booked",
+            "price_total_eur": 11188
+          },
+          {
+            "start": "2026-01-10",
+            "end": "2026-01-10",
+            "status": "booked",
+            "price_total_eur": 9000
+          },
+          {
+            "start": "2026-01-10",
+            "end": "2026-01-17",
+            "status": "option"
+          },
+          {
+            "start": "2026-01-17",
+            "end": "2026-02-14",
+            "status": "booked",
+            "price_total_eur": 9000
+          },
+          {
+            "start": "2026-02-14",
+            "end": "2026-02-14",
+            "status": "booked",
+            "price_total_eur": 20853
+          },
+          {
+            "start": "2026-02-14",
+            "end": "2026-02-28",
+            "status": "option"
+          },
+          {
+            "start": "2026-02-28",
+            "end": "2026-03-07",
+            "status": "free",
+            "price_total_eur": 13823
+          },
+          {
+            "start": "2026-03-07",
+            "end": "2026-03-14",
+            "status": "free",
+            "price_total_eur": 13823
+          },
+          {
+            "start": "2026-03-14",
+            "end": "2026-03-21",
+            "status": "blocked"
+          },
+          {
+            "start": "2026-03-14",
+            "end": "2026-03-14",
+            "status": "booked",
+            "price_total_eur": 11520
+          },
+          {
+            "start": "2026-03-21",
+            "end": "2026-03-28",
+            "status": "free",
+            "price_total_eur": 11520
+          },
+          {
+            "start": "2026-03-28",
+            "end": "2026-04-04",
+            "status": "free",
+            "price_total_eur": 11520
+          },
+          {
+            "start": "2026-04-04",
+            "end": "2026-04-11",
+            "status": "blocked"
+          },
+          {
+            "start": "2026-04-04",
+            "end": "2026-04-04",
+            "status": "booked",
+            "price_total_eur": 11520
+          },
+          {
+            "start": "2026-04-11",
+            "end": "2026-04-18",
+            "status": "free",
+            "price_total_eur": 11520
+          },
+          {
+            "start": "2026-04-18",
+            "end": "2026-04-25",
+            "status": "free",
+            "price_total_eur": 11520
+          },
+          {
+            "start": "2026-04-25",
+            "end": "2026-05-02",
+            "status": "free",
+            "price_total_eur": 11520
+          },
+          {
+            "start": "2026-05-02",
+            "end": "2026-05-03",
+            "status": "free",
+            "price_total_eur": 11520
+          }
+        ]
+      },
+      {
+        "id": "FLOCON",
+        "label": "FLOCON",
+        "weeks": [
+          {
+            "start": "2025-11-29",
+            "end": "2025-12-06",
+            "status": "free",
+            "price_total_eur": 2210
+          },
+          {
+            "start": "2025-12-06",
+            "end": "2025-12-13",
+            "status": "free",
+            "price_total_eur": 2210
+          },
+          {
+            "start": "2025-12-13",
+            "end": "2025-12-20",
+            "status": "booked",
+            "price_total_eur": 2320
+          },
+          {
+            "start": "2025-12-20",
+            "end": "2025-12-27",
+            "status": "booked",
+            "price_total_eur": 2850
+          },
+          {
+            "start": "2025-12-27",
+            "end": "2026-01-03",
+            "status": "booked",
+            "price_total_eur": 4085
+          },
+          {
+            "start": "2026-01-03",
+            "end": "2026-01-10",
+            "status": "booked",
+            "price_total_eur": 2540
+          },
+          {
+            "start": "2026-01-10",
+            "end": "2026-01-17",
+            "status": "free",
+            "price_total_eur": 2540
+          },
+          {
+            "start": "2026-01-17",
+            "end": "2026-02-14",
+            "status": "booked",
+            "price_total_eur": 2540
+          },
+          {
+            "start": "2026-02-14",
+            "end": "2026-02-21",
+            "status": "booked",
+            "price_total_eur": 4270
+          },
+          {
+            "start": "2026-02-21",
+            "end": "2026-03-07",
+            "status": "booked",
+            "price_total_eur": 2730
+          },
+          {
+            "start": "2026-03-07",
+            "end": "2026-03-21",
+            "status": "booked",
+            "price_total_eur": 2540
+          },
+          {
+            "start": "2026-03-21",
+            "end": "2026-03-28",
+            "status": "free",
+            "price_total_eur": 2540
+          },
+          {
+            "start": "2026-03-28",
+            "end": "2026-03-28",
+            "status": "booked",
+            "price_total_eur": 2540
+          },
+          {
+            "start": "2026-03-28",
+            "end": "2026-04-04",
+            "status": "option"
+          },
+          {
+            "start": "2026-04-04",
+            "end": "2026-04-11",
+            "status": "free",
+            "price_total_eur": 2540
+          },
+          {
+            "start": "2026-04-11",
+            "end": "2026-04-18",
+            "status": "free",
+            "price_total_eur": 2540
+          },
+          {
+            "start": "2026-04-18",
+            "end": "2026-04-25",
+            "status": "free",
+            "price_total_eur": 2540
+          },
+          {
+            "start": "2026-04-25",
+            "end": "2026-05-02",
+            "status": "free",
+            "price_total_eur": 2540
+          },
+          {
+            "start": "2026-05-02",
+            "end": "2026-05-03",
+            "status": "free",
+            "price_total_eur": 2540
+          }
+        ]
+      },
+      {
+        "id": "ETOILE",
+        "label": "ETOILE",
+        "weeks": [
+          {
+            "start": "2025-11-29",
+            "end": "2025-12-06",
+            "status": "free",
+            "price_total_eur": 3633
+          },
+          {
+            "start": "2025-12-06",
+            "end": "2025-12-13",
+            "status": "free",
+            "price_total_eur": 3633
+          },
+          {
+            "start": "2025-12-13",
+            "end": "2025-12-20",
+            "status": "booked",
+            "price_total_eur": 3815
+          },
+          {
+            "start": "2025-12-20",
+            "end": "2025-12-27",
+            "status": "booked",
+            "price_total_eur": 6305
+          },
+          {
+            "start": "2025-12-27",
+            "end": "2026-01-03",
+            "status": "booked",
+            "price_total_eur": 7495
+          },
+          {
+            "start": "2026-01-03",
+            "end": "2026-02-14",
+            "status": "booked",
+            "price_total_eur": 4180
+          },
+          {
+            "start": "2026-02-14",
+            "end": "2026-02-21",
+            "status": "booked",
+            "price_total_eur": 7850
+          },
+          {
+            "start": "2026-02-21",
+            "end": "2026-03-07",
+            "status": "booked",
+            "price_total_eur": 5510
+          },
+          {
+            "start": "2026-03-07",
+            "end": "2026-03-14",
+            "status": "booked",
+            "price_total_eur": 4960
+          },
+          {
+            "start": "2026-03-14",
+            "end": "2026-03-21",
+            "status": "free",
+            "price_total_eur": 4960
+          },
+          {
+            "start": "2026-03-21",
+            "end": "2026-03-28",
+            "status": "free",
+            "price_total_eur": 4960
+          },
+          {
+            "start": "2026-03-28",
+            "end": "2026-04-04",
+            "status": "free",
+            "price_total_eur": 4960
+          },
+          {
+            "start": "2026-04-04",
+            "end": "2026-04-11",
+            "status": "free",
+            "price_total_eur": 4960
+          },
+          {
+            "start": "2026-04-11",
+            "end": "2026-04-18",
+            "status": "free",
+            "price_total_eur": 4960
+          },
+          {
+            "start": "2026-04-18",
+            "end": "2026-04-25",
+            "status": "free",
+            "price_total_eur": 4960
+          },
+          {
+            "start": "2026-04-25",
+            "end": "2026-05-02",
+            "status": "free",
+            "price_total_eur": 4960
+          },
+          {
+            "start": "2026-05-02",
+            "end": "2026-05-03",
+            "status": "free",
+            "price_total_eur": 4960
+          }
+        ]
+      },
+      {
+        "id": "FLECHE",
+        "label": "FLECHE",
+        "weeks": [
+          {
+            "start": "2025-11-29",
+            "end": "2025-12-06",
+            "status": "free",
+            "price_total_eur": 5390
+          },
+          {
+            "start": "2025-12-06",
+            "end": "2025-12-13",
+            "status": "free",
+            "price_total_eur": 5390
+          },
+          {
+            "start": "2025-12-13",
+            "end": "2025-12-20",
+            "status": "booked",
+            "price_total_eur": 6290
+          },
+          {
+            "start": "2025-12-20",
+            "end": "2025-12-27",
+            "status": "booked",
+            "price_total_eur": 16775
+          },
+          {
+            "start": "2025-12-27",
+            "end": "2026-01-03",
+            "status": "booked",
+            "price_total_eur": 19355
+          },
+          {
+            "start": "2026-01-03",
+            "end": "2026-01-10",
+            "status": "booked",
+            "price_total_eur": 8400
+          },
+          {
+            "start": "2026-01-10",
+            "end": "2026-01-17",
+            "status": "booked",
+            "price_total_eur": 7855
+          },
+          {
+            "start": "2026-01-17",
+            "end": "2026-01-24",
+            "status": "free",
+            "price_total_eur": 7855
+          },
+          {
+            "start": "2026-01-24",
+            "end": "2026-02-07",
+            "status": "booked",
+            "price_total_eur": 7855
+          },
+          {
+            "start": "2026-02-07",
+            "end": "2026-02-14",
+            "status": "free",
+            "price_total_eur": 7855
+          },
+          {
+            "start": "2026-02-14",
+            "end": "2026-02-21",
+            "status": "free",
+            "price_total_eur": 7855
+          },
+          {
+            "start": "2026-02-21",
+            "end": "2026-03-07",
+            "status": "booked",
+            "price_total_eur": 9450
+          },
+          {
+            "start": "2026-03-07",
+            "end": "2026-03-28",
+            "status": "booked",
+            "price_total_eur": 7850
+          },
+          {
+            "start": "2026-03-28",
+            "end": "2026-04-04",
+            "status": "free",
+            "price_total_eur": 10000
+          },
+          {
+            "start": "2026-04-04",
+            "end": "2026-04-11",
+            "status": "booked",
+            "price_total_eur": 7850
+          },
+          {
+            "start": "2026-04-11",
+            "end": "2026-04-18",
+            "status": "free",
+            "price_total_eur": 7850
+          },
+          {
+            "start": "2026-04-18",
+            "end": "2026-04-25",
+            "status": "free",
+            "price_total_eur": 7850
+          },
+          {
+            "start": "2026-04-25",
+            "end": "2026-05-02",
+            "status": "free",
+            "price_total_eur": 7850
+          },
+          {
+            "start": "2026-05-02",
+            "end": "2026-05-03",
+            "status": "free",
+            "price_total_eur": 7850
+          }
+        ]
+      },
+      {
+        "id": "CHAMOIS",
+        "label": "CHAMOIS",
+        "weeks": [
+          {
+            "start": "2025-11-29",
+            "end": "2025-12-06",
+            "status": "free",
+            "price_total_eur": 5900
+          },
+          {
+            "start": "2025-12-06",
+            "end": "2025-12-13",
+            "status": "free",
+            "price_total_eur": 5900
+          },
+          {
+            "start": "2025-12-13",
+            "end": "2025-12-20",
+            "status": "free",
+            "price_total_eur": 5900
+          },
+          {
+            "start": "2025-12-20",
+            "end": "2025-12-27",
+            "status": "booked",
+            "price_total_eur": 18810
+          },
+          {
+            "start": "2025-12-27",
+            "end": "2026-01-03",
+            "status": "booked",
+            "price_total_eur": 20870
+          },
+          {
+            "start": "2026-01-03",
+            "end": "2026-01-10",
+            "status": "booked",
+            "price_total_eur": 9450
+          },
+          {
+            "start": "2026-01-10",
+            "end": "2026-02-14",
+            "status": "booked",
+            "price_total_eur": 8450
+          },
+          {
+            "start": "2026-02-14",
+            "end": "2026-02-21",
+            "status": "booked",
+            "price_total_eur": 19965
+          },
+          {
+            "start": "2026-02-21",
+            "end": "2026-03-07",
+            "status": "booked",
+            "price_total_eur": 11320
+          },
+          {
+            "start": "2026-03-07",
+            "end": "2026-03-28",
+            "status": "booked",
+            "price_total_eur": 8400
+          },
+          {
+            "start": "2026-03-28",
+            "end": "2026-04-04",
+            "status": "free",
+            "price_total_eur": 11000
+          },
+          {
+            "start": "2026-04-04",
+            "end": "2026-04-11",
+            "status": "free",
+            "price_total_eur": 11000
+          },
+          {
+            "start": "2026-04-11",
+            "end": "2026-04-18",
+            "status": "free",
+            "price_total_eur": 11000
+          },
+          {
+            "start": "2026-04-18",
+            "end": "2026-04-25",
+            "status": "free",
+            "price_total_eur": 11000
+          },
+          {
+            "start": "2026-04-25",
+            "end": "2026-05-02",
+            "status": "free",
+            "price_total_eur": 11000
+          },
+          {
+            "start": "2026-05-02",
+            "end": "2026-05-03",
+            "status": "free",
+            "price_total_eur": 11000
+          }
+        ]
+      },
+      {
+        "id": "SAVOIE-53",
+        "label": "SAVOIE-53",
+        "weeks": [
+          {
+            "start": "2025-11-29",
+            "end": "2025-12-06",
+            "status": "booked",
+            "price_total_eur": 7700
+          },
+          {
+            "start": "2025-12-06",
+            "end": "2025-12-13",
+            "status": "booked",
+            "price_total_eur": 9240
+          },
+          {
+            "start": "2025-12-13",
+            "end": "2025-12-20",
+            "status": "booked",
+            "price_total_eur": 9700
+          },
+          {
+            "start": "2025-12-20",
+            "end": "2025-12-27",
+            "status": "booked",
+            "price_total_eur": 24200
+          },
+          {
+            "start": "2025-12-27",
+            "end": "2026-01-03",
+            "status": "booked",
+            "price_total_eur": 25340
+          },
+          {
+            "start": "2026-01-03",
+            "end": "2026-01-10",
+            "status": "booked",
+            "price_total_eur": 15975
+          },
+          {
+            "start": "2026-01-10",
+            "end": "2026-01-31",
+            "status": "booked",
+            "price_total_eur": 11590
+          },
+          {
+            "start": "2026-01-31",
+            "end": "2026-02-07",
+            "status": "option"
+          },
+          {
+            "start": "2026-02-07",
+            "end": "2026-02-14",
+            "status": "booked",
+            "price_total_eur": 11590
+          },
+          {
+            "start": "2026-02-14",
+            "end": "2026-02-21",
+            "status": "free",
+            "price_total_eur": 24180
+          },
+          {
+            "start": "2026-02-21",
+            "end": "2026-02-28",
+            "status": "booked",
+            "price_total_eur": 19000
+          },
+          {
+            "start": "2026-02-28",
+            "end": "2026-03-07",
+            "status": "free",
+            "price_total_eur": 19000
+          },
+          {
+            "start": "2026-03-07",
+            "end": "2026-03-14",
+            "status": "free",
+            "price_total_eur": 19000
+          },
+          {
+            "start": "2026-03-14",
+            "end": "2026-03-21",
+            "status": "free",
+            "price_total_eur": 19000
+          },
+          {
+            "start": "2026-03-21",
+            "end": "2026-03-28",
+            "status": "free",
+            "price_total_eur": 19000
+          },
+          {
+            "start": "2026-03-28",
+            "end": "2026-04-04",
+            "status": "free",
+            "price_total_eur": 19000
+          },
+          {
+            "start": "2026-04-04",
+            "end": "2026-04-11",
+            "status": "booked",
+            "price_total_eur": 14930
+          },
+          {
+            "start": "2026-04-11",
+            "end": "2026-04-18",
+            "status": "free",
+            "price_total_eur": 14930
+          },
+          {
+            "start": "2026-04-18",
+            "end": "2026-04-25",
+            "status": "free",
+            "price_total_eur": 14930
+          },
+          {
+            "start": "2026-04-25",
+            "end": "2026-05-02",
+            "status": "free",
+            "price_total_eur": 14930
+          },
+          {
+            "start": "2026-05-02",
+            "end": "2026-05-03",
+            "status": "free",
+            "price_total_eur": 14930
+          }
+        ]
+      },
+      {
+        "id": "PIOU",
+        "label": "PIOU",
+        "weeks": [
+          {
+            "start": "2025-11-29",
+            "end": "2025-12-06",
+            "status": "free"
+          },
+          {
+            "start": "2025-12-06",
+            "end": "2025-12-07",
+            "status": "free"
+          },
+          {
+            "start": "2025-12-07",
+            "end": "2025-12-14",
+            "status": "booked",
+            "price_total_eur": 3633
+          },
+          {
+            "start": "2025-12-14",
+            "end": "2025-12-21",
+            "status": "booked",
+            "price_total_eur": 3815
+          },
+          {
+            "start": "2025-12-21",
+            "end": "2025-12-28",
+            "status": "booked",
+            "price_total_eur": 6305
+          },
+          {
+            "start": "2025-12-28",
+            "end": "2026-01-04",
+            "status": "booked",
+            "price_total_eur": 7495
+          },
+          {
+            "start": "2026-01-04",
+            "end": "2026-02-08",
+            "status": "booked",
+            "price_total_eur": 4180
+          },
+          {
+            "start": "2026-02-08",
+            "end": "2026-02-15",
+            "status": "option"
+          },
+          {
+            "start": "2026-02-15",
+            "end": "2026-02-21",
+            "status": "free",
+            "price_total_eur": 7850
+          },
+          {
+            "start": "2026-02-21",
+            "end": "2026-02-22",
+            "status": "free",
+            "price_total_eur": 7850
+          },
+          {
+            "start": "2026-02-22",
+            "end": "2026-03-01",
+            "status": "booked",
+            "price_total_eur": 5510
+          },
+          {
+            "start": "2026-03-01",
+            "end": "2026-03-07",
+            "status": "free",
+            "price_total_eur": 5510
+          },
+          {
+            "start": "2026-03-07",
+            "end": "2026-03-08",
+            "status": "free",
+            "price_total_eur": 5510
+          },
+          {
+            "start": "2026-03-08",
+            "end": "2026-03-15",
+            "status": "booked",
+            "price_total_eur": 4960
+          },
+          {
+            "start": "2026-03-15",
+            "end": "2026-03-22",
+            "status": "option"
+          },
+          {
+            "start": "2026-03-22",
+            "end": "2026-03-28",
+            "status": "free",
+            "price_total_eur": 4960
+          },
+          {
+            "start": "2026-03-28",
+            "end": "2026-03-29",
+            "status": "free",
+            "price_total_eur": 4960
+          },
+          {
+            "start": "2026-03-29",
+            "end": "2026-04-05",
+            "status": "booked",
+            "price_total_eur": 4960
+          },
+          {
+            "start": "2026-04-05",
+            "end": "2026-04-11",
+            "status": "free",
+            "price_total_eur": 4960
+          },
+          {
+            "start": "2026-04-11",
+            "end": "2026-04-18",
+            "status": "free",
+            "price_total_eur": 4960
+          },
+          {
+            "start": "2026-04-18",
+            "end": "2026-04-25",
+            "status": "free",
+            "price_total_eur": 4960
+          },
+          {
+            "start": "2026-04-25",
+            "end": "2026-05-02",
+            "status": "free",
+            "price_total_eur": 4960
+          },
+          {
+            "start": "2026-05-02",
+            "end": "2026-05-03",
+            "status": "free",
+            "price_total_eur": 4960
+          }
+        ]
+      },
+      {
+        "id": "CINQ",
+        "label": "CINQ",
+        "weeks": [
+          {
+            "start": "2025-11-29",
+            "end": "2025-11-30",
+            "status": "free"
+          },
+          {
+            "start": "2025-11-30",
+            "end": "2025-12-01",
+            "status": "booked",
+            "price_total_eur": 4500
+          },
+          {
+            "start": "2025-12-01",
+            "end": "2026-01-04",
+            "status": "blocked"
+          },
+          {
+            "start": "2026-01-04",
+            "end": "2026-01-11",
+            "status": "booked",
+            "price_total_eur": 12000
+          },
+          {
+            "start": "2026-01-11",
+            "end": "2026-01-17",
+            "status": "free",
+            "price_total_eur": 9000
+          },
+          {
+            "start": "2026-01-17",
+            "end": "2026-01-18",
+            "status": "free",
+            "price_total_eur": 9000
+          },
+          {
+            "start": "2026-01-18",
+            "end": "2026-01-25",
+            "status": "booked",
+            "price_total_eur": 9000
+          },
+          {
+            "start": "2026-01-25",
+            "end": "2026-01-31",
+            "status": "free",
+            "price_total_eur": 9000
+          },
+          {
+            "start": "2026-01-31",
+            "end": "2026-02-07",
+            "status": "free",
+            "price_total_eur": 9000
+          },
+          {
+            "start": "2026-02-07",
+            "end": "2026-02-08",
+            "status": "free",
+            "price_total_eur": 9000
+          },
+          {
+            "start": "2026-02-08",
+            "end": "2026-02-15",
+            "status": "booked",
+            "price_total_eur": 9000
+          },
+          {
+            "start": "2026-02-15",
+            "end": "2026-02-21",
+            "status": "free",
+            "price_total_eur": 15000
+          },
+          {
+            "start": "2026-02-21",
+            "end": "2026-02-22",
+            "status": "free",
+            "price_total_eur": 15000
+          },
+          {
+            "start": "2026-02-22",
+            "end": "2026-03-01",
+            "status": "booked",
+            "price_total_eur": 13000
+          },
+          {
+            "start": "2026-03-01",
+            "end": "2026-03-07",
+            "status": "free",
+            "price_total_eur": 13000
+          },
+          {
+            "start": "2026-03-07",
+            "end": "2026-03-08",
+            "status": "free",
+            "price_total_eur": 13000
+          },
+          {
+            "start": "2026-03-08",
+            "end": "2026-03-15",
+            "status": "booked",
+            "price_total_eur": 8000
+          },
+          {
+            "start": "2026-03-15",
+            "end": "2026-03-21",
+            "status": "free",
+            "price_total_eur": 8000
+          },
+          {
+            "start": "2026-03-21",
+            "end": "2026-03-28",
+            "status": "free",
+            "price_total_eur": 8000
+          },
+          {
+            "start": "2026-03-28",
+            "end": "2026-03-29",
+            "status": "free",
+            "price_total_eur": 8000
+          },
+          {
+            "start": "2026-03-29",
+            "end": "2026-03-30",
+            "status": "booked",
+            "price_total_eur": 8000
+          },
+          {
+            "start": "2026-03-30",
+            "end": "2026-04-16",
+            "status": "blocked"
+          },
+          {
+            "start": "2026-04-16",
+            "end": "2026-04-19",
+            "status": "booked",
+            "price_total_eur": 7000
+          },
+          {
+            "start": "2026-04-19",
+            "end": "2026-04-25",
+            "status": "free",
+            "price_total_eur": 7000
+          },
+          {
+            "start": "2026-04-25",
+            "end": "2026-05-02",
+            "status": "free",
+            "price_total_eur": 7000
+          },
+          {
+            "start": "2026-05-02",
+            "end": "2026-05-03",
+            "status": "free",
+            "price_total_eur": 7000
+          }
+        ]
+      },
+      {
+        "id": "PAPILLON",
+        "label": "PAPILLON",
+        "weeks": [
+          {
+            "start": "2025-11-29",
+            "end": "2025-12-06",
+            "status": "free"
+          },
+          {
+            "start": "2025-12-06",
+            "end": "2025-12-13",
+            "status": "free"
+          },
+          {
+            "start": "2025-12-13",
+            "end": "2025-12-14",
+            "status": "free"
+          },
+          {
+            "start": "2025-12-14",
+            "end": "2025-12-21",
+            "status": "booked",
+            "price_total_eur": 17600
+          },
+          {
+            "start": "2025-12-21",
+            "end": "2025-12-27",
+            "status": "free",
+            "price_total_eur": 47250
+          },
+          {
+            "start": "2025-12-27",
+            "end": "2025-12-28",
+            "status": "free",
+            "price_total_eur": 47250
+          },
+          {
+            "start": "2025-12-28",
+            "end": "2026-01-04",
+            "status": "booked",
+            "price_total_eur": 60000
+          },
+          {
+            "start": "2026-01-04",
+            "end": "2026-01-11",
+            "status": "booked",
+            "price_total_eur": 29400
+          },
+          {
+            "start": "2026-01-11",
+            "end": "2026-02-08",
+            "status": "booked",
+            "price_total_eur": 21900
+          },
+          {
+            "start": "2026-02-08",
+            "end": "2026-02-15",
+            "status": "option"
+          },
+          {
+            "start": "2026-02-15",
+            "end": "2026-02-22",
+            "status": "booked",
+            "price_total_eur": 53000
+          },
+          {
+            "start": "2026-02-22",
+            "end": "2026-02-28",
+            "status": "free",
+            "price_total_eur": 37365
+          },
+          {
+            "start": "2026-02-28",
+            "end": "2026-03-07",
+            "status": "free",
+            "price_total_eur": 37365
+          },
+          {
+            "start": "2026-03-07",
+            "end": "2026-03-08",
+            "status": "free",
+            "price_total_eur": 37365
+          },
+          {
+            "start": "2026-03-08",
+            "end": "2026-03-15",
+            "status": "booked",
+            "price_total_eur": 26000
+          },
+          {
+            "start": "2026-03-15",
+            "end": "2026-03-21",
+            "status": "free",
+            "price_total_eur": 24000
+          },
+          {
+            "start": "2026-03-21",
+            "end": "2026-03-28",
+            "status": "free",
+            "price_total_eur": 24000
+          },
+          {
+            "start": "2026-03-28",
+            "end": "2026-04-04",
+            "status": "free",
+            "price_total_eur": 24000
+          },
+          {
+            "start": "2026-04-04",
+            "end": "2026-04-11",
+            "status": "free",
+            "price_total_eur": 24000
+          },
+          {
+            "start": "2026-04-11",
+            "end": "2026-04-18",
+            "status": "free",
+            "price_total_eur": 24000
+          },
+          {
+            "start": "2026-04-18",
+            "end": "2026-04-25",
+            "status": "free",
+            "price_total_eur": 24000
+          },
+          {
+            "start": "2026-04-25",
+            "end": "2026-05-02",
+            "status": "free",
+            "price_total_eur": 24000
+          },
+          {
+            "start": "2026-05-02",
+            "end": "2026-05-03",
+            "status": "free",
+            "price_total_eur": 24000
+          }
+        ]
+      },
+      {
+        "id": "BLANCHOT",
+        "label": "BLANCHOT",
+        "weeks": [
+          {
+            "start": "2025-11-29",
+            "end": "2025-12-06",
+            "status": "free"
+          },
+          {
+            "start": "2025-12-06",
+            "end": "2025-12-13",
+            "status": "free"
+          },
+          {
+            "start": "2025-12-13",
+            "end": "2025-12-14",
+            "status": "free"
+          },
+          {
+            "start": "2025-12-14",
+            "end": "2025-12-21",
+            "status": "booked",
+            "price_total_eur": 2320
+          },
+          {
+            "start": "2025-12-21",
+            "end": "2025-12-28",
+            "status": "booked",
+            "price_total_eur": 2850
+          },
+          {
+            "start": "2025-12-28",
+            "end": "2026-01-04",
+            "status": "booked",
+            "price_total_eur": 4085
+          },
+          {
+            "start": "2026-01-04",
+            "end": "2026-02-15",
+            "status": "booked",
+            "price_total_eur": 2540
+          },
+          {
+            "start": "2026-02-15",
+            "end": "2026-02-22",
+            "status": "booked",
+            "price_total_eur": 4270
+          },
+          {
+            "start": "2026-02-22",
+            "end": "2026-02-22",
+            "status": "booked",
+            "price_total_eur": 2730
+          },
+          {
+            "start": "2026-02-22",
+            "end": "2026-03-01",
+            "status": "option"
+          },
+          {
+            "start": "2026-03-01",
+            "end": "2026-03-08",
+            "status": "booked",
+            "price_total_eur": 2730
+          },
+          {
+            "start": "2026-03-08",
+            "end": "2026-03-14",
+            "status": "free",
+            "price_total_eur": 2540
+          },
+          {
+            "start": "2026-03-14",
+            "end": "2026-03-21",
+            "status": "free",
+            "price_total_eur": 2540
+          },
+          {
+            "start": "2026-03-21",
+            "end": "2026-03-28",
+            "status": "free",
+            "price_total_eur": 2540
+          },
+          {
+            "start": "2026-03-28",
+            "end": "2026-04-04",
+            "status": "free",
+            "price_total_eur": 2540
+          },
+          {
+            "start": "2026-04-04",
+            "end": "2026-04-11",
+            "status": "free",
+            "price_total_eur": 2540
+          },
+          {
+            "start": "2026-04-11",
+            "end": "2026-04-18",
+            "status": "free",
+            "price_total_eur": 2540
+          },
+          {
+            "start": "2026-04-18",
+            "end": "2026-04-25",
+            "status": "free",
+            "price_total_eur": 2540
+          },
+          {
+            "start": "2026-04-25",
+            "end": "2026-05-02",
+            "status": "free",
+            "price_total_eur": 2540
+          },
+          {
+            "start": "2026-05-02",
+            "end": "2026-05-03",
+            "status": "free",
+            "price_total_eur": 2540
+          }
+        ]
+      },
+      {
+        "id": "CAHOKIA",
+        "label": "CAHOKIA",
+        "weeks": [
+          {
+            "start": "2025-11-29",
+            "end": "2025-12-06",
+            "status": "free"
+          },
+          {
+            "start": "2025-12-06",
+            "end": "2025-12-07",
+            "status": "free"
+          },
+          {
+            "start": "2025-12-07",
+            "end": "2025-12-14",
+            "status": "booked",
+            "price_total_eur": 13000
+          },
+          {
+            "start": "2025-12-14",
+            "end": "2025-12-20",
+            "status": "free",
+            "price_total_eur": 13500
+          },
+          {
+            "start": "2025-12-20",
+            "end": "2025-12-21",
+            "status": "free",
+            "price_total_eur": 13500
+          },
+          {
+            "start": "2025-12-21",
+            "end": "2026-01-04",
+            "status": "blocked"
+          },
+          {
+            "start": "2025-12-21",
+            "end": "2025-12-21",
+            "status": "booked",
+            "price_total_eur": 39200
+          },
+          {
+            "start": "2026-01-04",
+            "end": "2026-01-10",
+            "status": "free",
+            "price_total_eur": 25200
+          },
+          {
+            "start": "2026-01-10",
+            "end": "2026-01-11",
+            "status": "free",
+            "price_total_eur": 25200
+          },
+          {
+            "start": "2026-01-11",
+            "end": "2026-01-25",
+            "status": "booked",
+            "price_total_eur": 16200
+          },
+          {
+            "start": "2026-01-25",
+            "end": "2026-01-31",
+            "status": "free",
+            "price_total_eur": 16200
+          },
+          {
+            "start": "2026-01-31",
+            "end": "2026-02-01",
+            "status": "free",
+            "price_total_eur": 16200
+          },
+          {
+            "start": "2026-02-01",
+            "end": "2026-02-08",
+            "status": "blocked"
+          },
+          {
+            "start": "2026-02-08",
+            "end": "2026-02-14",
+            "status": "free",
+            "price_total_eur": 16200
+          },
+          {
+            "start": "2026-02-14",
+            "end": "2026-02-15",
+            "status": "free",
+            "price_total_eur": 16200
+          },
+          {
+            "start": "2026-02-15",
+            "end": "2026-03-07",
+            "status": "blocked"
+          },
+          {
+            "start": "2026-02-15",
+            "end": "2026-02-15",
+            "status": "booked",
+            "price_total_eur": 47000
+          },
+          {
+            "start": "2026-03-07",
+            "end": "2026-03-08",
+            "status": "booked",
+            "price_total_eur": 31000
+          },
+          {
+            "start": "2026-03-08",
+            "end": "2026-03-14",
+            "status": "free",
+            "price_total_eur": 20000
+          },
+          {
+            "start": "2026-03-14",
+            "end": "2026-03-21",
+            "status": "free",
+            "price_total_eur": 20000
+          },
+          {
+            "start": "2026-03-21",
+            "end": "2026-03-28",
+            "status": "free",
+            "price_total_eur": 20000
+          },
+          {
+            "start": "2026-03-28",
+            "end": "2026-04-04",
+            "status": "free",
+            "price_total_eur": 20000
+          },
+          {
+            "start": "2026-04-04",
+            "end": "2026-04-11",
+            "status": "free",
+            "price_total_eur": 20000
+          },
+          {
+            "start": "2026-04-11",
+            "end": "2026-04-18",
+            "status": "free",
+            "price_total_eur": 20000
+          },
+          {
+            "start": "2026-04-18",
+            "end": "2026-04-25",
+            "status": "free",
+            "price_total_eur": 20000
+          },
+          {
+            "start": "2026-04-25",
+            "end": "2026-05-02",
+            "status": "free",
+            "price_total_eur": 20000
+          },
+          {
+            "start": "2026-05-02",
+            "end": "2026-05-03",
+            "status": "free",
+            "price_total_eur": 20000
+          }
+        ]
+      },
+      {
+        "id": "FACE",
+        "label": "FACE",
+        "weeks": [
+          {
+            "start": "2025-11-29",
+            "end": "2025-12-06",
+            "status": "free"
+          },
+          {
+            "start": "2025-12-06",
+            "end": "2025-12-07",
+            "status": "free"
+          },
+          {
+            "start": "2025-12-07",
+            "end": "2025-12-11",
+            "status": "booked",
+            "price_total_eur": 19000
+          },
+          {
+            "start": "2025-12-11",
+            "end": "2025-12-14",
+            "status": "option"
+          },
+          {
+            "start": "2025-12-14",
+            "end": "2025-12-21",
+            "status": "booked",
+            "price_total_eur": 21945
+          },
+          {
+            "start": "2025-12-21",
+            "end": "2025-12-28",
+            "status": "booked",
+            "price_total_eur": 52500
+          },
+          {
+            "start": "2025-12-28",
+            "end": "2026-01-04",
+            "status": "booked",
+            "price_total_eur": 69000
+          },
+          {
+            "start": "2026-01-04",
+            "end": "2026-01-11",
+            "status": "booked",
+            "price_total_eur": 33600
+          },
+          {
+            "start": "2026-01-11",
+            "end": "2026-01-18",
+            "status": "booked",
+            "price_total_eur": 25300
+          },
+          {
+            "start": "2026-01-18",
+            "end": "2026-01-24",
+            "status": "free",
+            "price_total_eur": 26400
+          },
+          {
+            "start": "2026-01-24",
+            "end": "2026-01-31",
+            "status": "free",
+            "price_total_eur": 26400
+          },
+          {
+            "start": "2026-01-31",
+            "end": "2026-02-01",
+            "status": "free",
+            "price_total_eur": 26400
+          },
+          {
+            "start": "2026-02-01",
+            "end": "2026-02-15",
+            "status": "booked",
+            "price_total_eur": 26400
+          },
+          {
+            "start": "2026-02-15",
+            "end": "2026-02-21",
+            "status": "free",
+            "price_total_eur": 59000
+          },
+          {
+            "start": "2026-02-21",
+            "end": "2026-02-22",
+            "status": "free",
+            "price_total_eur": 59000
+          },
+          {
+            "start": "2026-02-22",
+            "end": "2026-03-01",
+            "status": "booked",
+            "price_total_eur": 40950
+          },
+          {
+            "start": "2026-03-01",
+            "end": "2026-03-07",
+            "status": "free",
+            "price_total_eur": 40950
+          },
+          {
+            "start": "2026-03-07",
+            "end": "2026-03-14",
+            "status": "free",
+            "price_total_eur": 40950
+          },
+          {
+            "start": "2026-03-14",
+            "end": "2026-03-15",
+            "status": "free",
+            "price_total_eur": 40950
+          },
+          {
+            "start": "2026-03-15",
+            "end": "2026-03-22",
+            "status": "booked",
+            "price_total_eur": 26000
+          },
+          {
+            "start": "2026-03-22",
+            "end": "2026-03-28",
+            "status": "free",
+            "price_total_eur": 26000
+          },
+          {
+            "start": "2026-03-28",
+            "end": "2026-03-29",
+            "status": "free",
+            "price_total_eur": 26000
+          },
+          {
+            "start": "2026-03-29",
+            "end": "2026-04-05",
+            "status": "booked",
+            "price_total_eur": 29000
+          },
+          {
+            "start": "2026-04-05",
+            "end": "2026-04-11",
+            "status": "free",
+            "price_total_eur": 26000
+          },
+          {
+            "start": "2026-04-11",
+            "end": "2026-04-18",
+            "status": "free",
+            "price_total_eur": 26000
+          },
+          {
+            "start": "2026-04-18",
+            "end": "2026-04-25",
+            "status": "free",
+            "price_total_eur": 26000
+          },
+          {
+            "start": "2026-04-25",
+            "end": "2026-05-02",
+            "status": "free",
+            "price_total_eur": 26000
+          },
+          {
+            "start": "2026-05-02",
+            "end": "2026-05-03",
+            "status": "free",
+            "price_total_eur": 26000
+          }
+        ]
+      },
+      {
+        "id": "SIFFLOTTE",
+        "label": "SIFFLOTTE",
+        "weeks": [
+          {
+            "start": "2025-11-29",
+            "end": "2025-11-30",
+            "status": "free"
+          },
+          {
+            "start": "2025-11-30",
+            "end": "2025-12-14",
+            "status": "booked",
+            "price_total_eur": 3402
+          },
+          {
+            "start": "2025-12-14",
+            "end": "2025-12-21",
+            "status": "booked",
+            "price_total_eur": 3572
+          },
+          {
+            "start": "2025-12-21",
+            "end": "2025-12-28",
+            "status": "booked",
+            "price_total_eur": 5935
+          },
+          {
+            "start": "2025-12-28",
+            "end": "2026-01-04",
+            "status": "booked",
+            "price_total_eur": 6880
+          },
+          {
+            "start": "2026-01-04",
+            "end": "2026-02-15",
+            "status": "booked",
+            "price_total_eur": 3910
+          },
+          {
+            "start": "2026-02-15",
+            "end": "2026-02-22",
+            "status": "booked",
+            "price_total_eur": 7205
+          },
+          {
+            "start": "2026-02-22",
+            "end": "2026-03-08",
+            "status": "booked",
+            "price_total_eur": 5180
+          },
+          {
+            "start": "2026-03-08",
+            "end": "2026-03-15",
+            "status": "booked",
+            "price_total_eur": 4740
+          },
+          {
+            "start": "2026-03-15",
+            "end": "2026-03-21",
+            "status": "free",
+            "price_total_eur": 4740
+          },
+          {
+            "start": "2026-03-21",
+            "end": "2026-03-28",
+            "status": "free",
+            "price_total_eur": 4740
+          },
+          {
+            "start": "2026-03-28",
+            "end": "2026-03-29",
+            "status": "free",
+            "price_total_eur": 4740
+          },
+          {
+            "start": "2026-03-29",
+            "end": "2026-04-05",
+            "status": "booked",
+            "price_total_eur": 4740
+          },
+          {
+            "start": "2026-04-05",
+            "end": "2026-04-11",
+            "status": "free",
+            "price_total_eur": 4740
+          },
+          {
+            "start": "2026-04-11",
+            "end": "2026-04-18",
+            "status": "free",
+            "price_total_eur": 4740
+          },
+          {
+            "start": "2026-04-18",
+            "end": "2026-04-25",
+            "status": "free",
+            "price_total_eur": 4740
+          },
+          {
+            "start": "2026-04-25",
+            "end": "2026-05-02",
+            "status": "free",
+            "price_total_eur": 4740
+          },
+          {
+            "start": "2026-05-02",
+            "end": "2026-05-03",
+            "status": "free",
+            "price_total_eur": 4740
+          }
+        ]
+      },
+      {
+        "id": "BESTVIEW",
+        "label": "BESTVIEW",
+        "weeks": [
+          {
+            "start": "2025-11-29",
+            "end": "2025-11-30",
+            "status": "free"
+          },
+          {
+            "start": "2025-11-30",
+            "end": "2025-12-07",
+            "status": "booked",
+            "price_total_eur": 7500
+          },
+          {
+            "start": "2025-12-07",
+            "end": "2025-12-11",
+            "status": "booked",
+            "price_total_eur": 9440
+          },
+          {
+            "start": "2025-12-11",
+            "end": "2025-12-14",
+            "status": "option"
+          },
+          {
+            "start": "2025-12-14",
+            "end": "2025-12-21",
+            "status": "booked",
+            "price_total_eur": 11000
+          },
+          {
+            "start": "2025-12-21",
+            "end": "2025-12-28",
+            "status": "booked",
+            "price_total_eur": 24900
+          },
+          {
+            "start": "2025-12-28",
+            "end": "2026-01-04",
+            "status": "booked",
+            "price_total_eur": 25940
+          },
+          {
+            "start": "2026-01-04",
+            "end": "2026-01-11",
+            "status": "booked",
+            "price_total_eur": 14975
+          },
+          {
+            "start": "2026-01-11",
+            "end": "2026-02-15",
+            "status": "booked",
+            "price_total_eur": 12290
+          },
+          {
+            "start": "2026-02-15",
+            "end": "2026-02-22",
+            "status": "booked",
+            "price_total_eur": 25180
+          },
+          {
+            "start": "2026-02-22",
+            "end": "2026-03-08",
+            "status": "booked",
+            "price_total_eur": 19000
+          },
+          {
+            "start": "2026-03-08",
+            "end": "2026-03-14",
+            "status": "free",
+            "price_total_eur": 17330
+          },
+          {
+            "start": "2026-03-14",
+            "end": "2026-03-15",
+            "status": "free",
+            "price_total_eur": 17330
+          },
+          {
+            "start": "2026-03-15",
+            "end": "2026-03-22",
+            "status": "booked",
+            "price_total_eur": 15530
+          },
+          {
+            "start": "2026-03-22",
+            "end": "2026-03-28",
+            "status": "free",
+            "price_total_eur": 15530
+          },
+          {
+            "start": "2026-03-28",
+            "end": "2026-03-29",
+            "status": "free",
+            "price_total_eur": 15530
+          },
+          {
+            "start": "2026-03-29",
+            "end": "2026-04-05",
+            "status": "booked",
+            "price_total_eur": 17330
+          },
+          {
+            "start": "2026-04-05",
+            "end": "2026-04-11",
+            "status": "free",
+            "price_total_eur": 15530
+          },
+          {
+            "start": "2026-04-11",
+            "end": "2026-04-18",
+            "status": "free",
+            "price_total_eur": 15530
+          },
+          {
+            "start": "2026-04-18",
+            "end": "2026-04-25",
+            "status": "free",
+            "price_total_eur": 15530
+          },
+          {
+            "start": "2026-04-25",
+            "end": "2026-05-02",
+            "status": "free",
+            "price_total_eur": 15530
+          },
+          {
+            "start": "2026-05-02",
+            "end": "2026-05-03",
+            "status": "free",
+            "price_total_eur": 15530
+          }
+        ]
+      },
+      {
+        "id": "MARIE",
+        "label": "MARIE",
+        "weeks": [
+          {
+            "start": "2025-11-29",
+            "end": "2025-11-30",
+            "status": "free"
+          },
+          {
+            "start": "2025-11-30",
+            "end": "2025-12-07",
+            "status": "booked",
+            "price_total_eur": 9500
+          },
+          {
+            "start": "2025-12-07",
+            "end": "2025-12-14",
+            "status": "booked",
+            "price_total_eur": 14000
+          },
+          {
+            "start": "2025-12-14",
+            "end": "2025-12-21",
+            "status": "booked",
+            "price_total_eur": 15400
+          },
+          {
+            "start": "2025-12-21",
+            "end": "2025-12-28",
+            "status": "booked",
+            "price_total_eur": 43050
+          },
+          {
+            "start": "2025-12-28",
+            "end": "2026-01-04",
+            "status": "booked",
+            "price_total_eur": 55000
+          },
+          {
+            "start": "2026-01-04",
+            "end": "2026-01-10",
+            "status": "free",
+            "price_total_eur": 27300
+          },
+          {
+            "start": "2026-01-10",
+            "end": "2026-01-11",
+            "status": "free",
+            "price_total_eur": 27300
+          },
+          {
+            "start": "2026-01-11",
+            "end": "2026-02-08",
+            "status": "booked",
+            "price_total_eur": 19800
+          },
+          {
+            "start": "2026-02-08",
+            "end": "2026-02-14",
+            "status": "free",
+            "price_total_eur": 19800
+          },
+          {
+            "start": "2026-02-14",
+            "end": "2026-02-21",
+            "status": "free",
+            "price_total_eur": 19800
+          },
+          {
+            "start": "2026-02-21",
+            "end": "2026-02-22",
+            "status": "free",
+            "price_total_eur": 19800
+          },
+          {
+            "start": "2026-02-22",
+            "end": "2026-03-01",
+            "status": "booked",
+            "price_total_eur": 33600
+          },
+          {
+            "start": "2026-03-01",
+            "end": "2026-03-07",
+            "status": "free",
+            "price_total_eur": 33600
+          },
+          {
+            "start": "2026-03-07",
+            "end": "2026-03-14",
+            "status": "free",
+            "price_total_eur": 33600
+          },
+          {
+            "start": "2026-03-14",
+            "end": "2026-03-21",
+            "status": "free",
+            "price_total_eur": 33600
+          },
+          {
+            "start": "2026-03-21",
+            "end": "2026-03-28",
+            "status": "free",
+            "price_total_eur": 33600
+          },
+          {
+            "start": "2026-03-28",
+            "end": "2026-04-04",
+            "status": "free",
+            "price_total_eur": 33600
+          },
+          {
+            "start": "2026-04-04",
+            "end": "2026-04-11",
+            "status": "free",
+            "price_total_eur": 33600
+          },
+          {
+            "start": "2026-04-11",
+            "end": "2026-04-18",
+            "status": "free",
+            "price_total_eur": 33600
+          },
+          {
+            "start": "2026-04-18",
+            "end": "2026-04-25",
+            "status": "free",
+            "price_total_eur": 33600
+          },
+          {
+            "start": "2026-04-25",
+            "end": "2026-05-02",
+            "status": "free",
+            "price_total_eur": 33600
+          },
+          {
+            "start": "2026-05-02",
+            "end": "2026-05-03",
+            "status": "free",
+            "price_total_eur": 33600
+          }
+        ]
+      },
+      {
+        "id": "MATHILDA",
+        "label": "MATHILDA",
+        "weeks": [
+          {
+            "start": "2025-11-29",
+            "end": "2025-11-30",
+            "status": "free"
+          },
+          {
+            "start": "2025-11-30",
+            "end": "2025-12-07",
+            "status": "booked",
+            "price_total_eur": 11000
+          },
+          {
+            "start": "2025-12-07",
+            "end": "2025-12-14",
+            "status": "booked",
+            "price_total_eur": 15500
+          },
+          {
+            "start": "2025-12-14",
+            "end": "2025-12-21",
+            "status": "booked",
+            "price_total_eur": 18000
+          },
+          {
+            "start": "2025-12-21",
+            "end": "2025-12-28",
+            "status": "booked",
+            "price_total_eur": 50000
+          },
+          {
+            "start": "2025-12-28",
+            "end": "2026-01-04",
+            "status": "booked",
+            "price_total_eur": 65000
+          },
+          {
+            "start": "2026-01-04",
+            "end": "2026-01-10",
+            "status": "free",
+            "price_total_eur": 31500
+          },
+          {
+            "start": "2026-01-10",
+            "end": "2026-01-17",
+            "status": "free",
+            "price_total_eur": 31500
+          },
+          {
+            "start": "2026-01-17",
+            "end": "2026-01-24",
+            "status": "free",
+            "price_total_eur": 31500
+          },
+          {
+            "start": "2026-01-24",
+            "end": "2026-01-25",
+            "status": "free",
+            "price_total_eur": 31500
+          },
+          {
+            "start": "2026-01-25",
+            "end": "2026-02-01",
+            "status": "booked",
+            "price_total_eur": 26400
+          },
+          {
+            "start": "2026-02-01",
+            "end": "2026-02-07",
+            "status": "free",
+            "price_total_eur": 26400
+          },
+          {
+            "start": "2026-02-07",
+            "end": "2026-02-08",
+            "status": "free",
+            "price_total_eur": 26400
+          },
+          {
+            "start": "2026-02-08",
+            "end": "2026-02-15",
+            "status": "booked",
+            "price_total_eur": 26400
+          },
+          {
+            "start": "2026-02-15",
+            "end": "2026-02-22",
+            "status": "booked",
+            "price_total_eur": 54000
+          },
+          {
+            "start": "2026-02-22",
+            "end": "2026-03-01",
+            "status": "booked",
+            "price_total_eur": 40850
+          },
+          {
+            "start": "2026-03-01",
+            "end": "2026-03-08",
+            "status": "booked",
+            "price_total_eur": 37000
+          },
+          {
+            "start": "2026-03-08",
+            "end": "2026-03-14",
+            "status": "free",
+            "price_total_eur": 27000
+          },
+          {
+            "start": "2026-03-14",
+            "end": "2026-03-15",
+            "status": "free",
+            "price_total_eur": 27000
+          },
+          {
+            "start": "2026-03-15",
+            "end": "2026-03-29",
+            "status": "booked",
+            "price_total_eur": 25000
+          },
+          {
+            "start": "2026-03-29",
+            "end": "2026-04-05",
+            "status": "booked",
+            "price_total_eur": 27000
+          },
+          {
+            "start": "2026-04-05",
+            "end": "2026-04-11",
+            "status": "free",
+            "price_total_eur": 25000
+          },
+          {
+            "start": "2026-04-11",
+            "end": "2026-04-18",
+            "status": "free",
+            "price_total_eur": 25000
+          },
+          {
+            "start": "2026-04-18",
+            "end": "2026-04-25",
+            "status": "free",
+            "price_total_eur": 25000
+          },
+          {
+            "start": "2026-04-25",
+            "end": "2026-05-02",
+            "status": "free",
+            "price_total_eur": 25000
+          },
+          {
+            "start": "2026-05-02",
+            "end": "2026-05-03",
+            "status": "free",
+            "price_total_eur": 25000
+          }
+        ]
+      }
+    ]
   }
 ]

@@ -78,7 +78,7 @@ const getStatusForDay = (day: Date, bookings: Booking[], chaletId: string): { te
 const MobileCalendarView: React.FC<MobileCalendarViewProps> = ({ chalets, bookings, currentDate, selectedDate, onDateSelect }) => {
   const monthStart = startOfMonth(currentDate);
   const monthEnd = endOfMonth(currentDate);
-  const calendarStart = startOfWeek(monthStart, { weekStartsOn: 0 }); // Sunday start to match image
+  const calendarStart = startOfWeek(monthStart, { weekStartsOn: 0 }); // Sunday start
   const calendarEnd = endOfWeek(monthEnd, { weekStartsOn: 0 });
   const days = eachDayOfInterval({ start: calendarStart, end: calendarEnd });
 
@@ -87,7 +87,7 @@ const MobileCalendarView: React.FC<MobileCalendarViewProps> = ({ chalets, bookin
   
   if (chalets.length === 0) {
     return (
-        <div className="text-center py-10 bg-white dark:bg-card-dark rounded-lg shadow">
+        <div className="text-center py-10 bg-card rounded-lg border">
             <p>Sélectionnez un ou plusieurs chalets pour afficher les disponibilités.</p>
         </div>
     );
@@ -95,12 +95,12 @@ const MobileCalendarView: React.FC<MobileCalendarViewProps> = ({ chalets, bookin
 
   return (
     <>
-      <div className="bg-white dark:bg-card-dark rounded-lg shadow p-2 sm:p-4">
-        <div className="grid grid-cols-7 text-center text-xs font-semibold text-gray-500 dark:text-gray-400">
+      <div className="bg-card text-card-foreground rounded-lg border p-2 sm:p-4">
+        <div className="grid grid-cols-7 text-center text-xs font-semibold text-muted-foreground">
           {daysOfWeek.map(day => <div key={day} className="py-2">{day}</div>)}
         </div>
 
-        <div className="grid grid-cols-7 border-t border-l border-gray-200 dark:border-border-dark">
+        <div className="grid grid-cols-7 border-t border-l">
           {days.map((day) => {
             const isCurrentMonth = isSameMonth(day, monthStart);
             const isTodaysDate = isToday(day);
@@ -118,15 +118,15 @@ const MobileCalendarView: React.FC<MobileCalendarViewProps> = ({ chalets, bookin
                 key={day.toISOString()}
                 onClick={() => onDateSelect(isSelected ? null : day)}
                 className={cn(
-                  "py-1 text-center border-r border-b border-gray-200 dark:border-border-dark flex flex-col items-center justify-start h-20 cursor-pointer transition-all",
-                  !isCurrentMonth && "text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-card-dark/50",
-                  isSelected && "bg-primary/20 ring-2 ring-primary z-10 scale-105"
+                  "py-1 text-center border-r border-b flex flex-col items-center justify-start h-20 cursor-pointer transition-all",
+                  !isCurrentMonth && "text-muted-foreground bg-muted/50",
+                  isSelected && "bg-accent ring-2 ring-primary z-10 scale-105 rounded-md"
                 )}
               >
                 <span className={cn(
                   "w-6 h-6 flex items-center justify-center rounded-full text-sm transition-colors",
-                  isTodaysDate && !isSelected && "bg-primary text-white font-bold",
-                  isSelected && "bg-primary text-white font-bold"
+                  isTodaysDate && !isSelected && "bg-primary text-primary-foreground font-bold",
+                  isSelected && "bg-primary text-primary-foreground font-bold"
                 )}>
                   {format(day, 'd')}
                 </span>
@@ -140,7 +140,7 @@ const MobileCalendarView: React.FC<MobileCalendarViewProps> = ({ chalets, bookin
                       ></div>
                     ))}
                     {remainingCount > 0 && (
-                      <div className="text-xs text-gray-500 dark:text-gray-400">
+                      <div className="text-xs text-muted-foreground">
                         +{remainingCount}
                       </div>
                     )}
@@ -153,7 +153,7 @@ const MobileCalendarView: React.FC<MobileCalendarViewProps> = ({ chalets, bookin
       </div>
       
       {selectedDate && (
-        <div className="mt-4 bg-white dark:bg-card-dark rounded-lg shadow p-4 animate-fade-in-slow">
+        <div className="mt-4 bg-card text-card-foreground rounded-lg border p-4 animate-fade-in-slow">
           <h3 className="font-bold text-lg mb-3">
             Statut du {format(selectedDate, 'd MMMM yyyy', { locale: fr })}
           </h3>
@@ -166,7 +166,7 @@ const MobileCalendarView: React.FC<MobileCalendarViewProps> = ({ chalets, bookin
                   <span className="font-medium">{chalet.name}</span>
                   <div className="flex items-center gap-2">
                     {status.price && (
-                        <span className="font-semibold text-gray-700 dark:text-gray-300">
+                        <span className="font-semibold text-foreground">
                             {new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 }).format(status.price)}
                         </span>
                     )}

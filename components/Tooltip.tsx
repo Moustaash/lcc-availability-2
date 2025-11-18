@@ -16,7 +16,7 @@ const Tooltip: React.FC<TooltipProps> = ({ content, position, visible }) => {
     <div
       className={cn(
         "fixed top-0 left-0 z-50 p-3 text-sm rounded-lg shadow-xl pointer-events-none transition-opacity",
-        "bg-white dark:bg-card-dark text-gray-900 dark:text-text-dark border border-gray-200 dark:border-border-dark",
+        "bg-popover text-popover-foreground border",
         visible ? "opacity-100" : "opacity-0"
       )}
       style={{
