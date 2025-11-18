@@ -1,6 +1,4 @@
-
 import React from 'react';
-// FIX: Changed date-fns imports to use named imports from 'date-fns' and 'date-fns/locale' to resolve call signature errors.
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { Chalet } from '../lib/types';
@@ -47,23 +45,23 @@ const FilterControls: React.FC<FilterControlsProps> = ({
     closeDatePicker();
   };
 
-  const buttonClasses = "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground h-10 w-10";
+  const iconButtonClasses = "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground h-9 w-9 border border-border bg-card shadow-sm";
 
   return (
-    <div className="mb-6 p-4 bg-card text-card-foreground rounded-lg border">
-      <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-        {/* Month Navigator & Unified Date Picker */}
-        <div className="flex items-center gap-1">
-          <button onClick={onPrevMonth} className={buttonClasses} aria-label="Previous month">
-            <span className="material-symbols-outlined">chevron_left</span>
+    <div className="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        {/* Date Navigation */}
+        <div className="flex items-center gap-2 bg-card/50 p-1 rounded-lg">
+          <button onClick={onPrevMonth} className={iconButtonClasses} aria-label="Previous month">
+            <span className="material-symbols-outlined text-[20px]">chevron_left</span>
           </button>
 
           <div className="relative">
              <button 
               ref={triggerRef}
               onClick={toggleDatePicker}
-              className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 w-44 capitalize"
+              className="inline-flex items-center gap-2 justify-center whitespace-nowrap rounded-md text-sm font-semibold transition-all border border-border bg-card hover:bg-accent hover:text-accent-foreground hover:shadow-md h-9 px-4 min-w-[180px] shadow-sm capitalize"
             >
+              <span className="material-symbols-outlined text-[18px] text-muted-foreground">calendar_month</span>
               {format(currentDate, 'MMMM yyyy', { locale: fr })}
             </button>
             {isDatePickerOpen && (
@@ -77,8 +75,8 @@ const FilterControls: React.FC<FilterControlsProps> = ({
             )}
           </div>
           
-          <button onClick={onNextMonth} className={buttonClasses} aria-label="Next month">
-            <span className="material-symbols-outlined">chevron_right</span>
+          <button onClick={onNextMonth} className={iconButtonClasses} aria-label="Next month">
+            <span className="material-symbols-outlined text-[20px]">chevron_right</span>
           </button>
         </div>
         
@@ -90,7 +88,6 @@ const FilterControls: React.FC<FilterControlsProps> = ({
                 onSelectionChange={onSelectedChaletsChange}
             />
         </div>
-      </div>
     </div>
   );
 };

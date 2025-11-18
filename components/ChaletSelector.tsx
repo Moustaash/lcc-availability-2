@@ -6,9 +6,6 @@ import { useMediaQuery } from '../hooks/useMediaQuery';
 
 // --- Sub-components extracted for stability ---
 
-/**
- * A single item in the chalet list, used by both mobile and desktop views.
- */
 const ChaletListItem: React.FC<{
   chalet: Chalet;
   isSelected: boolean;
@@ -16,29 +13,31 @@ const ChaletListItem: React.FC<{
 }> = React.memo(({ chalet, isSelected, onToggle }) => (
   <li 
     onClick={() => onToggle(chalet)}
-    className="p-3 hover:bg-accent cursor-pointer flex items-center gap-4"
+    className={cn(
+        "p-3 cursor-pointer flex items-center gap-4 transition-colors",
+        isSelected ? "bg-accent/50" : "hover:bg-accent/50"
+    )}
     role="option"
     aria-selected={isSelected}
   >
-    <img 
-      src={chalet.imageUrl} 
-      alt={chalet.name} 
-      className="w-16 h-12 object-cover rounded-md flex-shrink-0 bg-muted" 
-      loading="lazy"
-    />
-    <span className="flex-grow font-medium">{chalet.name}</span>
+    <div className="relative w-16 h-12 rounded-md overflow-hidden flex-shrink-0 bg-muted border border-border/50">
+        <img 
+        src={chalet.imageUrl} 
+        alt={chalet.name} 
+        className="w-full h-full object-cover" 
+        loading="lazy"
+        />
+    </div>
+    <span className="flex-grow font-medium text-sm">{chalet.name}</span>
     <div className={cn(
-        "w-5 h-5 rounded-sm border-2 flex-shrink-0 flex items-center justify-center transition-colors",
-        isSelected ? 'bg-primary border-primary text-primary-foreground' : 'border-muted-foreground'
+        "w-5 h-5 rounded-full border flex-shrink-0 flex items-center justify-center transition-all",
+        isSelected ? 'bg-primary border-primary text-primary-foreground scale-100' : 'border-input scale-90'
     )}>
-      {isSelected && <span className="material-symbols-outlined text-base font-bold">check</span>}
+      {isSelected && <span className="material-symbols-outlined text-[14px] font-bold">check</span>}
     </div>
   </li>
 ));
 
-/**
- * The mobile bottom-sheet modal.
- */
 const MobileModal: React.FC<{
   filteredChalets: Chalet[];
   tempSelection: Chalet[];
@@ -51,30 +50,33 @@ const MobileModal: React.FC<{
 }> = ({ filteredChalets, tempSelection, searchQuery, onSearchChange, onToggle, onClose, onReset, onApply }) => (
   ReactDOM.createPortal(
     <div 
-      className="fixed inset-0 bg-black/60 z-50 flex flex-col justify-end animate-fade-in"
+      className="fixed inset-0 bg-black/60 z-[60] flex flex-col justify-end animate-fade-in backdrop-blur-sm"
       onClick={onClose}
     >
         <div 
-          className="bg-card rounded-t-2xl flex flex-col h-[90vh] max-h-[700px] animate-slide-up"
+          className="bg-background rounded-t-2xl flex flex-col h-[90vh] max-h-[700px] animate-slide-up shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
             <header className="p-4 border-b flex justify-between items-center flex-shrink-0">
                 <h2 className="text-lg font-bold">Sélectionner les chalets</h2>
-                <button onClick={onClose} className="p-2 rounded-full hover:bg-accent">
+                <button onClick={onClose} className="p-2 rounded-full hover:bg-accent text-muted-foreground">
                     <span className="material-symbols-outlined">close</span>
                 </button>
             </header>
-            <div className="p-3 border-b flex-shrink-0">
-              <input 
-                type="search"
-                placeholder="Rechercher un chalet..."
-                value={searchQuery}
-                onChange={onSearchChange}
-                className="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              />
+            <div className="p-4 border-b flex-shrink-0 bg-muted/20">
+              <div className="relative">
+                <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-[20px]">search</span>
+                <input 
+                    type="search"
+                    placeholder="Rechercher..."
+                    value={searchQuery}
+                    onChange={onSearchChange}
+                    className="flex h-10 w-full rounded-full border border-input bg-background px-3 py-2 pl-10 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                />
+              </div>
             </div>
             <div className="flex-grow overflow-y-auto">
-              <ul className="divide-y">
+              <ul className="divide-y divide-border/40">
                 {filteredChalets.map(chalet => (
                   <ChaletListItem 
                     key={chalet.id}
@@ -85,15 +87,15 @@ const MobileModal: React.FC<{
                 ))}
               </ul>
             </div>
-            <footer className="p-4 border-t flex items-center gap-4 flex-shrink-0">
-                <button onClick={onReset} className="text-sm font-semibold text-primary hover:underline px-4">
-                    Réinitialiser
+            <footer className="p-4 border-t flex items-center gap-4 flex-shrink-0 bg-background">
+                <button onClick={onReset} className="text-sm font-semibold text-muted-foreground hover:text-primary px-4 transition-colors">
+                    Tout effacer
                 </button>
                 <button 
                   onClick={onApply} 
-                  className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8 flex-grow"
+                  className="inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-bold transition-colors bg-primary text-primary-foreground hover:bg-primary/90 h-12 px-8 flex-grow shadow-lg shadow-primary/20"
                 >
-                    Valider
+                    Valider ({tempSelection.length})
                 </button>
             </footer>
         </div>
@@ -101,16 +103,13 @@ const MobileModal: React.FC<{
           @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
           .animate-fade-in { animation: fade-in 0.3s ease-out; }
           @keyframes slide-up { from { transform: translateY(100%); } to { transform: translateY(0); } }
-          .animate-slide-up { animation: slide-up 0.3s ease-out; }
+          .animate-slide-up { animation: slide-up 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
         `}</style>
     </div>,
     document.body
   )
 );
 
-/**
- * The desktop dropdown menu.
- */
 const DesktopDropdown: React.FC<{
   filteredChalets: Chalet[];
   selectedChalets: Chalet[];
@@ -120,34 +119,38 @@ const DesktopDropdown: React.FC<{
   onReset: () => void;
 }> = ({ filteredChalets, selectedChalets, searchQuery, onSearchChange, onToggle, onReset }) => (
   <div 
-    className="absolute z-20 top-full mt-1 w-full sm:w-80 bg-popover text-popover-foreground border rounded-md shadow-md flex flex-col"
+    className="absolute z-20 top-full right-0 mt-2 w-80 bg-popover text-popover-foreground border rounded-xl shadow-xl flex flex-col overflow-hidden animate-fade-in"
     role="listbox"
   >
-    <div className="p-2 border-b">
-       <input 
-        type="search"
-        placeholder="Rechercher..."
-        value={searchQuery}
-        onChange={onSearchChange}
-        className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-      />
+    <div className="p-3 border-b bg-muted/30">
+      <div className="relative">
+        <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-[18px]">search</span>
+        <input 
+            type="search"
+            placeholder="Filtrer les chalets..."
+            value={searchQuery}
+            onChange={onSearchChange}
+            className="flex h-9 w-full rounded-lg border border-input bg-background px-3 py-1 pl-9 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+        />
+      </div>
     </div>
-    <div className="max-h-80 overflow-y-auto">
-      <ul className="divide-y">
+    <div className="max-h-[400px] overflow-y-auto p-1">
+      <ul className="space-y-1">
         {filteredChalets.map(chalet => (
-          <ChaletListItem 
-            key={chalet.id}
-            chalet={chalet}
-            isSelected={selectedChalets.some(c => c.id === chalet.id)}
-            onToggle={onToggle}
-          />
+          <div key={chalet.id} className="rounded-md overflow-hidden">
+             <ChaletListItem 
+                chalet={chalet}
+                isSelected={selectedChalets.some(c => c.id === chalet.id)}
+                onToggle={onToggle}
+            />
+          </div>
         ))}
       </ul>
     </div>
     {selectedChalets.length > 0 && (
-      <div className="p-2 border-t">
-        <button onClick={onReset} className="text-sm text-primary hover:underline w-full text-left p-1">
-          Réinitialiser
+      <div className="p-2 border-t bg-muted/20">
+        <button onClick={onReset} className="text-xs font-medium text-primary hover:text-primary/80 hover:underline w-full text-center p-2">
+          Réinitialiser la sélection
         </button>
       </div>
     )}
@@ -178,17 +181,15 @@ const ChaletSelector: React.FC<ChaletSelectorProps> = ({ chalets, selectedChalet
     );
   }, [chalets, searchQuery]);
 
-  // Sync temp state to the official selection when the modal opens
   useEffect(() => {
     if (isOpen) {
-      setSearchQuery(''); // Reset search on open
+      setSearchQuery(''); 
       if (isMobile) {
         setTempSelection(selectedChalets);
       }
     }
   }, [isOpen, isMobile, selectedChalets]);
 
-  // Close desktop dropdown on outside click
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (!isMobile && wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
@@ -205,7 +206,7 @@ const ChaletSelector: React.FC<ChaletSelectorProps> = ({ chalets, selectedChalet
     ? "Tous les chalets" 
     : selectedChalets.length === 1
     ? selectedChalets[0].name
-    : `${selectedChalets.length} chalets sélectionnés`;
+    : `${selectedChalets.length} chalets`;
 
   const handleMobileToggle = (chalet: Chalet) => {
     setTempSelection(current => 
@@ -223,10 +224,6 @@ const ChaletSelector: React.FC<ChaletSelectorProps> = ({ chalets, selectedChalet
     );
   };
 
-  const handleMobileReset = () => {
-    setTempSelection([]);
-  };
-
   const handleDesktopReset = () => {
     onSelectionChange([]);
     setIsOpen(false);
@@ -236,17 +233,28 @@ const ChaletSelector: React.FC<ChaletSelectorProps> = ({ chalets, selectedChalet
     onSelectionChange(tempSelection);
     setIsOpen(false);
   };
+  
+  const handleMobileReset = () => {
+    setTempSelection([]);
+  }
 
   return (
     <div className="relative" ref={wrapperRef}>
       <button 
         onClick={() => setIsOpen(!isOpen)} 
-        className="inline-flex items-center justify-between whitespace-nowrap rounded-md text-sm font-medium border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 w-full sm:w-64 text-left"
+        className={cn(
+            "inline-flex items-center justify-between whitespace-nowrap rounded-md text-sm font-semibold transition-all h-9 px-4 py-2 w-full sm:w-64 text-left",
+            "border border-border bg-card shadow-sm hover:bg-accent hover:text-accent-foreground hover:shadow-md",
+            isOpen && "ring-2 ring-primary/20 border-primary"
+        )}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
       >
-        <span className="truncate">{selectionText}</span>
-        <span className={cn("material-symbols-outlined transition-transform text-muted-foreground", isOpen && "rotate-180")}>expand_more</span>
+        <div className="flex items-center gap-2 truncate">
+            <span className="material-symbols-outlined text-[18px] text-muted-foreground">filter_alt</span>
+            <span className="truncate">{selectionText}</span>
+        </div>
+        <span className={cn("material-symbols-outlined text-[18px] transition-transform text-muted-foreground", isOpen && "rotate-180")}>expand_more</span>
       </button>
 
       {isOpen && (isMobile ? 

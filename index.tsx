@@ -9,7 +9,7 @@ if (!rootElement) {
 }
 
 const root = ReactDOM.createRoot(rootElement);
-// FIX: Wrap the App component with ThemeProvider to pass it as a child. This is required by ThemeProvider and resolves the "missing 'children' prop" error.
+
 root.render(
   <React.StrictMode>
     <ThemeProvider>
